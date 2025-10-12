@@ -1,0 +1,127 @@
+/* Footer Styles */
+.footer {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 2.5rem 0 1.5rem;
+}
+
+.footer h5 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.footer p {
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.footer-link:hover {
+    color: white;
+    transform: translateX(3px);
+}
+
+.quick-links li {
+    margin-bottom: 0.4rem;
+}
+
+.footer-address {
+    font-style: normal;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer-address .bi {
+    margin-right: 0.5rem;
+    opacity: 0.9;
+}
+
+.footer strong {
+    color: white;
+    font-weight: 600;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    justify-content: flex-start;
+    padding-left: 0;
+}
+
+@media (max-width: 767.98px) {
+    .social-links {
+        justify-content: center;
+    }
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.social-links a:hover {
+    background-color: white;
+    color: #764ba2;
+    transform: translateY(-2px);
+}
+
+.social-links .bi {
+    font-size: 1.25rem;
+}
+
+.footer hr {
+    margin: 2rem 0;
+    border-color: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+.footer .text-center {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Contact Info Icons */
+.footer .bi-geo-alt-fill,
+.footer .bi-telephone-fill,
+.footer .bi-map {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 2rem 0 1.5rem;
+    }
+
+    .footer .col-md-3 {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+
+    .footer-link:hover {
+        transform: none;
+    }
+}

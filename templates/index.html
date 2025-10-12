@@ -6,7 +6,6 @@
     <div class="container text-center">
         <img src="{{ url_for('static', filename='images/KE_Logo.png') }}" alt="Kalyani Enterprises Logo" class="hero-logo">
         <h1 class="company-name">KALYANI ENTERPRISES</h1>
-        <p class="gst-number">GST NO. 20DEHPD8158C1ZX</p>
         <h2 class="tagline">INVERTERS, BATTERIES, SOLARS PANELS AND MORE</h2>
         <div class="authorized-dealer">
             <p class="dealer-badge">✓ AUTHORISED DISTRIBUTOR</p>
@@ -26,8 +25,8 @@
 
 
         <div class="cta-buttons">
-            <a href="tel:9162461804" class="btn btn-call">
-                <i class="bi bi-telephone-fill"></i> Call: 9162461804
+            <a href="tel:+919162461804" class="btn btn-call">
+                <i class="bi bi-telephone-fill"></i> Call: +91 9162461804
             </a>
             <a href="https://wa.me/919162461804" class="btn btn-whatsapp" target="_blank">
                 <i class="bi bi-whatsapp"></i> WhatsApp
@@ -37,30 +36,111 @@
 </section>
 
 <!-- Products Section -->
-<section id="products" class="products-section py-5">
+<!-- Products Section -->
+<section id="products" class="products-section py-4">
     <div class="container">
-        <h2 class="section-title text-center mb-5">Our Premium Products</h2>
+        <h2 class="section-title text-center mb-3">Our Premium Products</h2>
+        <p class="section-subtitle text-center mb-4">High-quality solar panels, batteries, and power solutions</p>
         
-        <div class="row g-4">
-            {% for product in products %}
-            <div class="col-md-4">
+        <div class="cards-grid">
+            {% for item in products %}
+            {% if item.type == 'Product' %}
+            <div class="card-wrapper">
                 <div class="product-card">
-                    {% if product.image %}
-                    <img src="{{ url_for('static', filename='images/' + product.image) }}" 
-                        alt="{{ product.name }}" 
-                        class="product-img"
-                        onerror="this.style.display='none'">
-                    {% else %}
-                    <div class="product-img-placeholder"></div>
-                    {% endif %}
-                    <h3>{{ product.name }}</h3>
-                    <ul class="product-features">
-                        {% for feature in product.features %}
-                        <li>{{ feature }}</li>
-                        {% endfor %}
-                    </ul>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            {% if 'Solar Panels' in item.name %}
+                                <i class="bi bi-sun"></i>
+                            {% elif 'Batteries' in item.name %}
+                                <i class="bi bi-battery-charging"></i>
+                            {% elif 'Inverters' in item.name %}
+                                <i class="bi bi-lightning-charge"></i>
+                            {% elif 'Storage' in item.name %}
+                                <i class="bi bi-power"></i>
+                            {% else %}
+                                <i class="bi bi-box-seam"></i>
+                            {% endif %}
+                        </div>
+                        <h3>{{ item.name }}</h3>
+                    </div>
+                    <div class="product-content">
+                        <ul class="product-features">
+                            {% for feature in item.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="product-image-container">
+                        {% if item.image %}
+                        <img src="{{ url_for('static', filename='images/' + item.image) }}" 
+                            alt="{{ item.name }}" 
+                            class="product-img"
+                            onerror="this.onerror=null; this.classList.add('pattern-bg');">
+                        {% else %}
+                        <div class="product-img-placeholder pattern-bg"></div>
+                        {% endif %}
+                    </div>
+                    <div class="card-overlay">
+                        <span class="learn-more">Learn More →</span>
+                    </div>
                 </div>
             </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="services-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-3">Our Services</h2>
+        <p class="section-subtitle text-center mb-4">Professional installation and support for all your energy needs</p>
+        
+        <div class="cards-grid">
+            {% for item in products %}
+            {% if item.type == 'Service' %}
+            <div class="card-wrapper">
+                <div class="service-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            {% if 'Installation' in item.name %}
+                                <i class="bi bi-tools"></i>
+                            {% elif 'Maintenance' in item.name %}
+                                <i class="bi bi-gear"></i>
+                            {% elif 'Inspection' in item.name %}
+                                <i class="bi bi-search"></i>
+                            {% elif 'Solutions' in item.name %}
+                                <i class="bi bi-lightbulb"></i>
+                            {% else %}
+                                <i class="bi bi-tools"></i>
+                            {% endif %}
+                        </div>
+                        <h3>{{ item.name }}</h3>
+                    </div>
+                    <div class="service-content">
+                        <ul class="service-features">
+                            {% for feature in item.features %}
+                            <li>{{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="service-image-container">
+                        {% if item.image %}
+                        <img src="{{ url_for('static', filename='images/' + item.image) }}" 
+                            alt="{{ item.name }}" 
+                            class="service-img"
+                            onerror="this.onerror=null; this.classList.add('pattern-bg');">
+                        {% else %}
+                        <div class="service-img-placeholder pattern-bg"></div>
+                        {% endif %}
+                    </div>
+                    <div class="card-overlay">
+                        <span class="learn-more">View Details →</span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
@@ -70,7 +150,7 @@
 <section id="portfolio" class="portfolio-section py-5">
     <div class="container">
         <h2 class="section-title text-center mb-4">Our Work Portfolio</h2>
-        <p class="text-center mb-5 section-subtitle">Explore our successful solar and battery installations across Giridih and surrounding areas</p>
+        <p class="text-center mb-5 section-subtitle">Explore our successful solar and battery installations across Jharkhand</p>
         
         <div class="portfolio-slider">
             <div class="portfolio-track">
@@ -142,7 +222,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <img src="{{ url_for('static', filename='images/20221003_015403_0000.png') }}" 
+                <img src="{{ url_for('static', filename='images/KE_Banner.jpeg') }}" 
                      alt="Kalyani Enterprises" 
                      class="about-img"
                      onerror="this.src='https://via.placeholder.com/600x400/667eea/ffffff?text=Kalyani+Enterprises'">
@@ -150,7 +230,7 @@
             <div class="col-md-6">
                 <h2 class="section-title">About Us</h2>
                 <p class="about-text">
-                    Kalyani Enterprises is a trusted authorized distributor for <strong>Livguard Solar, Livguard Batteries, and Eastman Solar</strong> products, proudly serving Giridih, Jharkhand and surrounding regions.
+                    Kalyani Enterprises is a trusted authorized distributor for <strong>Livguard Solar, Livguard Energy, Eastman Solar & Indpower</strong> products, proudly serving customers across Jharkhand.
                 </p>
                 <p class="about-text">
                     With years of experience in the energy solutions industry, we provide high-quality solar panels, inverters, batteries, and complete power backup systems for residential, commercial, and industrial applications.
@@ -209,43 +289,41 @@
                 </div>
             </div>
 
-            <!-- Map -->
+            <!-- Map and Contact Info -->
             <div class="col-md-6 mb-4">
                 <div class="map-wrapper">
                     <h3>Visit Our Location</h3>
+                    <div class="contact-info-bar">
+                        <div class="contact-quick-info">
+                            <a href="tel:+919162461804" class="quick-contact-link">
+                                <i class="bi bi-telephone-fill"></i> +91 9162461804
+                            </a>
+                            <a href="mailto:kdevi9162@gmail.com" class="quick-contact-link">
+                                <i class="bi bi-envelope-fill"></i> kdevi9162@gmail.com
+                            </a>
+                        </div>
+                    </div>
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d58233.67450732448!2d85.892491!3d24.185594!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f38d2ab714e73f%3A0xee7d567dcc342b0e!2sKALYANI%20ENTERPRISES!5e0!3m2!1sen!2sus!4v1759967706730!5m2!1sen!2sus" 
                         width="100%" 
-                        height="400" 
+                        height="300" 
                         style="border:0; border-radius: 10px;" 
                         allowfullscreen="" 
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                     
-                    <div class="contact-details mt-4">
-                        <div class="contact-item">
-                            <i class="bi bi-geo-alt-fill"></i>
-                            <div>
-                                <strong>Address:</strong><br>
-                                Potma, Sabalpur, Rajdhanwar Road,<br>
-                                Sariya, Giridih, Jharkhand 825320<br>
-                                <small>Plus Code: 6V6X+C7</small>
+                    <div class="contact-details mt-3">
+                        <div class="office-address">
+                            <div class="contact-header">
+                                <i class="bi bi-building"></i>
+                                <h4>Registered Office Address</h4>
                             </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-telephone-fill"></i>
-                            <div>
-                                <strong>Phone:</strong><br>
-                                <a href="tel:9162461804">9162461804</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="bi bi-envelope-fill"></i>
-                            <div>
-                                <strong>GST:</strong><br>
-                                20DEHPD8158C1ZX
-                            </div>
+                            <p class="mb-0">
+                                Village - Potma, Bajrang Chowk<br>
+                                Post Office - Sabalpur, Rajdhanwar Road<br>
+                                Sariya, Giridih, Jharkhand 825320
+                            </p>
                         </div>
                     </div>
                 </div>

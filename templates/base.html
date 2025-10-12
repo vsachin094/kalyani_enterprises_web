@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kalyani Enterprises - Authorized Distributor of Livguard Solar, Livguard Batteries & Eastman Solar in Giridih, Jharkhand">
-    <meta name="keywords" content="Livguard Solar, Eastman Solar, Inverter, Battery, Solar Panels, Giridih">
-    <title>{% block title %}Kalyani Enterprises | Livguard & Eastman Solar{% endblock %}</title>
+    <meta name="description" content="Kalyani Enterprises - Authorized Distributor of Livguard Solar, Livguard Energy, Eastman Solar & Indpower in Jharkhand">
+    <meta name="keywords" content="Livguard Solar, Livguard Energy, Eastman Solar, Indpower, Inverter, Battery, Solar Panels, Solar Solutions">
+    <title>{% block title %}Kalyani Enterprises | Livguard, Eastman Solar & Indpower{% endblock %}</title>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
@@ -13,6 +13,8 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
     
     {% block extra_css %}{% endblock %}
 </head>
@@ -50,7 +52,7 @@
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-success-nav ms-2" href="tel:9162461804">
+                        <a class="nav-link btn btn-success-nav ms-2" href="tel:+919162461804">
                             <i class="bi bi-telephone-fill"></i> Call Now
                         </a>
                     </li>
@@ -59,7 +61,7 @@
         </div>
     </nav> -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient bg-transparent sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
             <img src="{{ url_for('static', filename='images/KE_Logo.png') }}" alt="KE Logo" class="nav-logo me-2">
@@ -77,7 +79,7 @@
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 <li class="nav-item">
-                <a class="nav-link btn btn-success-nav ms-2" href="tel:9162461804">
+                <a class="nav-link btn btn-success-nav ms-2" href="tel:+919162461804">
                     <i class="bi bi-telephone-fill"></i> Call Now
                 </a>
                 </li>
@@ -97,35 +99,57 @@
     {% block content %}{% endblock %}
 
     <!-- Footer -->
-    <footer class="footer py-4">
+    <footer class="footer">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-3">
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
                     <h5>Kalyani Enterprises</h5>
-                    <p class="small">Authorized Distributor of Livguard Solar, Livguard Batteries & Eastman Solar</p>
-                    <p class="small mb-0">GST: 20DEHPD8158C1ZX</p>
+                    <p class="mb-1">Authorized Distributor of:</p>
+                    <p class="mb-0">Livguard Solar • Livguard Energy • Eastman Solar • Indpower</p>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-lg-2 col-md-6">
                     <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled quick-links">
                         <li><a href="#home" class="footer-link">Home</a></li>
                         <li><a href="#products" class="footer-link">Products</a></li>
                         <li><a href="#portfolio" class="footer-link">Portfolio</a></li>
                         <li><a href="#testimonials" class="footer-link">Testimonials</a></li>
-                        <li><a href="#about" class="footer-link">About Us</a></li>
+                        <li><a href="#about" class="footer-link">About</a></li>
                         <li><a href="#contact" class="footer-link">Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-lg-4 col-md-6">
                     <h5>Contact Info</h5>
-                    <p class="small mb-1"><i class="bi bi-geo-alt-fill"></i> Potma, Sabalpur, Rajdhanwar Road, Sariya, Giridih - 825320</p>
-                    <p class="small mb-1"><i class="bi bi-telephone-fill"></i> <a href="tel:9162461804" class="footer-link">9162461804</a></p>
-                    <p class="small mb-0"><i class="bi bi-map"></i> Plus Code: 6V6X+C7</p>
+                    <address class="footer-address">
+                        <p class="mb-2">
+                            <i class="bi bi-geo-alt-fill"></i> 
+                            Village - Potma, Bajrang Chowk<br>
+                            Post Office - Sabalpur, Rajdhanwar Road<br>
+                            Sariya, Giridih, Jharkhand 825320
+                        </p>
+                        <p class="mb-2">
+                            <i class="bi bi-telephone-fill"></i> 
+                            <a href="tel:+919162461804" class="footer-link">+91 9162461804</a>
+                        </p>
+                        <p class="mb-0">
+                            <i class="bi bi-envelope-fill"></i> 
+                            <a href="mailto:kdevi9162@gmail.com" class="footer-link">kdevi9162@gmail.com</a>
+                        </p>
+                    </address>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5>Connect With Us</h5>
+                    <div class="social-links">
+                        <a href="#" target="_blank" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" target="_blank" title="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" target="_blank" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
                 </div>
             </div>
-            <hr class="my-3 bg-light">
-            <div class="text-center">
-                <p class="mb-0 small">&copy; 2025 Kalyani Enterprises. All Rights Reserved.</p>
+            <hr>
+            <div class="text-center copyright">
+                <p class="mb-0">&copy; 2025 Kalyani Enterprises. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

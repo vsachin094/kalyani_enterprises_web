@@ -18,6 +18,56 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Advanced navbar scroll effect
+function updateNavbar() {
+    const mainNav = document.getElementById('mainNav');
+    const scrollTop = window.scrollY;
+    const hero = document.querySelector('.hero-section'); // Assuming you have a hero section
+    
+    if (!mainNav || !hero) return;
+
+    const heroBottom = hero.offsetTop + hero.offsetHeight;
+    const scrollPercent = Math.min((scrollTop / heroBottom) * 100, 100);
+    
+    // Check if we're over a light background
+    if (scrollTop > 50) {
+        mainNav.classList.add('navbar-scrolled');
+        // Add smooth opacity transition
+        mainNav.style.background = `rgba(255, 255, 255, ${Math.min(scrollPercent / 100 * 0.9, 0.9)})`;
+        mainNav.style.backdropFilter = `blur(${Math.min(scrollPercent / 10, 10)}px)`;
+    } else {
+        mainNav.classList.remove('navbar-scrolled');
+        mainNav.style.background = 'transparent';
+        mainNav.style.backdropFilter = 'blur(0px)';
+    }
+}
+
+// Debounce function for better performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Initialize navbar behavior
+document.addEventListener('DOMContentLoaded', function() {
+    // Initial check
+    updateNavbar();
+    
+    // Handle scroll with debouncing for better performance
+    const debouncedScroll = debounce(() => requestAnimationFrame(updateNavbar), 10);
+    window.addEventListener('scroll', debouncedScroll, { passive: true });
+    
+    // Handle window resize
+    window.addEventListener('resize', debouncedScroll, { passive: true });
+});
+
 // Add active class to nav links on scroll
 window.addEventListener('scroll', function() {
     let scrollPosition = window.scrollY;

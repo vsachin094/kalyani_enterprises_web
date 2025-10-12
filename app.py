@@ -30,68 +30,111 @@ testimonials = [
 ]
 
 
-products = [
+products_and_services = [
+    # 🌞 PRODUCTS
     {
-        'name': 'Livguard Solar Panels',
-        'image': 'products/livguard_solar_panel.png',
+        'name': 'Solar Panels',
+        'type': 'Product',
+        'image': 'products/solar_panels.png',
         'features': [
             'Mono PERC & Halfcut Technology',
-            '540W - 550W Capacity',
+            '540W - 550W High-Efficiency Modules',
             '25-Year Performance Warranty',
-            'High Efficiency Modules'
+            'Available from Leading Brands: Livguard Solar, Eastman Solar, Indpower'
         ]
     },
     {
-        'name': 'Livguard Batteries',
-        'image': 'products/livguard_battery.png',
+        'name': 'Solar Batteries',
+        'type': 'Product',
+        'image': 'products/solar_battery.png',
         'features': [
-            'Tall Tubular & Flat Plate',
-            'Enhanced Safety Features',
-            'Long Backup Duration',
-            'Low Maintenance Design'
-        ]
-    },
-    {
-        'name': 'Eastman Solar Panels',
-        'image': 'products/eastman_solar.png',
-        'features': [
-            'MONO PERC Technology',
-            '550W Halfcut Panels',
-            'Superior Performance',
-            'Weather Resistant'
+            'Tall Tubular & Flat Plate Options',
+            'Deep Cycle Design for Solar Applications',
+            'Long Backup Duration with Low Maintenance',
+            'Available from Livguard Energy, Eastman & Indpower'
         ]
     },
     {
         'name': 'Power Inverters',
-        'image': 'products/livguard_inverter.png',
+        'type': 'Product',
+        'image': 'products/power_inverter.png',
         'features': [
-            'Pure Sine Wave Output',
-            'Smart Battery Management',
-            'LCD Display Panel',
-            'Overload Protection'
+            'Pure Sine Wave Output for Sensitive Equipment',
+            'Smart Battery Management System',
+            'LCD Display & Overload Protection',
+            'Options from Livguard, Eastman & Indpower'
         ]
     },
     {
         'name': 'Solar Inverters',
-        'image': '',  # No image
+        'type': 'Product',
+        'image': 'products/solar_inverter.png',
         'features': [
-            'MPPT Technology',
-            'Grid & Off-Grid Systems',
-            'High Conversion Efficiency',
-            'Remote Monitoring'
+            'Advanced MPPT Technology',
+            'Supports Grid & Off-Grid Systems',
+            'High Conversion Efficiency with Remote Monitoring',
+            'Available Across Multiple Brands'
         ]
     },
     {
-        'name': 'Complete Solutions',
-        'image': 'products/solar_solution.png',
+        'name': 'Energy Storage Systems',
+        'type': 'Product',
+        'image': 'products/energy_storage.png',
         'features': [
-            'Residential Solar Systems',
-            'Commercial Installations',
-            'Off-Grid Power Backup',
-            'Professional Installation'
+            'Scalable Energy Backup Solutions',
+            'Hybrid Inverter Compatibility',
+            'Smart Load Management',
+            'Ideal for Homes, Petrol Pumps & Commercial Use'
+        ]
+    },
+
+    # 🧰 SERVICES
+    {
+        'name': 'Solar Installation',
+        'type': 'Service',
+        'image': 'services/installation.png',
+        'features': [
+            'Complete Solar System Setup',
+            'Professional On-Site Installation',
+            'Trained Technicians for Residential & Commercial Projects',
+            'End-to-End Commissioning Support'
+        ]
+    },
+    {
+        'name': 'Maintenance & Support',
+        'type': 'Service',
+        'image': 'services/maintenance.png',
+        'features': [
+            'Regular System Health Checks',
+            'Preventive and Corrective Maintenance',
+            'Performance Optimization',
+            '24x7 Service Assistance'
+        ]
+    },
+    {
+        'name': 'Site Inspection & Consultation',
+        'type': 'Service',
+        'image': 'services/site_inspection.png',
+        'features': [
+            'Detailed Site Assessment for Solar Feasibility',
+            'Energy Load Analysis',
+            'System Design Recommendations',
+            'Customized Power Solutions'
+        ]
+    },
+    {
+        'name': 'Custom Power Solutions',
+        'type': 'Service',
+        'image': 'services/power_solutions.png',
+        'features': [
+            'Tailored Solutions for Petrol Pumps, Buildings & Factories',
+            'Grid-Tied, Hybrid & Off-Grid Setups',
+            'Project Design, Supply & Installation',
+            'Turnkey Execution from Start to Finish'
         ]
     }
 ]
+
 
 
 @app.route('/')
@@ -103,7 +146,7 @@ def index():
         for f in os.listdir(brand_folder):
             if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp', '.tif', '.svg')):
                 brand_logos.append('images/brands/' + f)
-    return render_template('index.html', brand_logos=brand_logos,testimonials=testimonials,products=products)
+    return render_template('index.html', brand_logos=brand_logos, testimonials=testimonials, products=products_and_services)
 
 @app.route('/submit_inquiry', methods=['POST'])
 def submit_inquiry():
@@ -129,4 +172,3 @@ def submit_inquiry():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
-    #test

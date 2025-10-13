@@ -1,0 +1,57 @@
+{
+  "name": "Solar Installation",
+  "order": 1,
+  "short_description": "Professional Solar System Installation",
+  "image": "services/installation.jpg",
+  "features": [
+    "Complete Solar System Setup",
+    "Professional On-Site Installation",
+    "Trained Technicians for Residential & Commercial Projects",
+    "End-to-End Commissioning Support"
+  ],
+  "full_description": "Expert installation services for all types of solar systems. Our certified technicians ensure proper installation, testing, and commissioning for optimal performance.",
+  "process": [
+    {
+      "step": 1,
+      "title": "Site Assessment",
+      "description": "Detailed site survey and feasibility study"
+    },
+    {
+      "step": 2,
+      "title": "System Design",
+      "description": "Customized system design based on energy needs"
+    },
+    {
+      "step": 3,
+      "title": "Installation",
+      "description": "Professional mounting and electrical integration"
+    },
+    {
+      "step": 4,
+      "title": "Commissioning",
+      "description": "Testing, activation, and handover"
+    }
+  ],
+  "included_services": [
+    "Site survey and feasibility",
+    "System design and documentation",
+    "Structural mounting",
+    "Electrical wiring and integration",
+    "Inverter and battery setup",
+    "Testing and commissioning",
+    "Training and handover"
+  ],
+  "duration": "3-7 days",
+  "warranty": "2 years installation warranty",
+  "service_areas": [
+    "Giridih",
+    "Ranchi",
+    "Dhanbad",
+    "Jamshedpur",
+    "Bokaro"
+  ],
+  "gallery": [
+    "images/services/installation_1.jpg",
+    "images/services/install_2.jpg"
+  ]
+}

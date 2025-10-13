@@ -1,0 +1,54 @@
+{
+  "name": "Maintenance & Support",
+  "order": 2,
+  "short_description": "Regular Maintenance & 24/7 Support",
+  "image": "services/maintenance.png",
+  "features": [
+    "Regular System Health Checks",
+    "Preventive and Corrective Maintenance",
+    "Performance Optimization",
+    "24x7 Service Assistance"
+  ],
+  "full_description": "Comprehensive maintenance and support services to ensure your solar system operates at peak efficiency throughout its lifetime.",
+  "services_included": [
+    "Quarterly system inspection",
+    "Panel cleaning and maintenance",
+    "Performance monitoring",
+    "Inverter servicing",
+    "Battery health check",
+    "Connection tightening",
+    "Remote troubleshooting"
+  ],
+  "plans": [
+    {
+      "name": "Basic",
+      "features": [
+        "Annual inspection",
+        "Emergency support"
+      ],
+      "price": "₹3,000/year"
+    },
+    {
+      "name": "Standard",
+      "features": [
+        "Quarterly inspection",
+        "Priority support",
+        "Free cleaning"
+      ],
+      "price": "₹8,000/year"
+    },
+    {
+      "name": "Premium",
+      "features": [
+        "Monthly inspection",
+        "24/7 support",
+        "Free parts replacement"
+      ],
+      "price": "₹15,000/year"
+    }
+  ],
+  "gallery": [
+    "services/maint_1.jpg",
+    "services/maint_2.jpg"
+  ]
+}

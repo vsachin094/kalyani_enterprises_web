@@ -1,0 +1,51 @@
+{
+  "name": "Energy Storage Systems",
+  "order": 5,
+  "short_description": "Complete Energy Storage Solutions",
+  "image": "products/energy_storage.png",
+  "features": [
+    "Scalable Energy Backup Solutions",
+    "Hybrid Inverter Compatibility",
+    "Smart Load Management",
+    "Ideal for Homes, Petrol Pumps & Commercial Use"
+  ],
+  "full_description": "Comprehensive energy storage systems combining batteries, inverters, and intelligent management systems for reliable backup power and energy independence.",
+  "specifications": {
+    "Storage Capacity": "5kWh - 50kWh",
+    "Battery Type": "Lithium-ion / Lead Acid",
+    "System Voltage": "48V DC",
+    "Warranty": "5-10 Years",
+    "Life Cycles": "3000+ cycles",
+    "Management": "Smart BMS"
+  },
+  "benefits": [
+    "Complete backup solution",
+    "Scalable capacity",
+    "Intelligent power management",
+    "Long service life",
+    "Reduced electricity bills"
+  ],
+  "applications": [
+    "Home energy storage",
+    "Petrol pump backup",
+    "Commercial establishments",
+    "Industrial facilities",
+    "Telecom towers"
+  ],
+  "brands": [
+    "Livguard",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/storage_1.jpg",
+    "products/storage_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/energy-storage-catalog.pdf",
+  "price_range": "₹50,000 - ₹5,00,000",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-inverters",
+    "solar-batteries"
+  ]
+}

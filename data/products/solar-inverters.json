@@ -1,0 +1,51 @@
+{
+  "name": "Solar Inverters",
+  "order": 4,
+  "short_description": "MPPT Solar Charge Controllers & Inverters",
+  "image": "products/solar_inverter.png",
+  "features": [
+    "Advanced MPPT Technology",
+    "Supports Grid & Off-Grid Systems",
+    "High Conversion Efficiency with Remote Monitoring",
+    "Available Across Multiple Brands"
+  ],
+  "full_description": "State-of-the-art solar inverters with Maximum Power Point Tracking (MPPT) technology for optimal energy harvest from solar panels. Suitable for both grid-tied and off-grid applications.",
+  "specifications": {
+    "Capacity Range": "1kW - 10kW",
+    "MPPT Efficiency": "99.5%",
+    "Type": "Hybrid / On-Grid / Off-Grid",
+    "Display": "LCD with Wi-Fi",
+    "Warranty": "5 Years",
+    "Protection": "IP65 Rated"
+  },
+  "benefits": [
+    "Maximum power extraction from panels",
+    "Works with or without grid",
+    "Remote monitoring capability",
+    "Battery charging optimization",
+    "Weather-resistant design"
+  ],
+  "applications": [
+    "Residential solar systems",
+    "Commercial installations",
+    "Industrial applications",
+    "Agricultural pumping",
+    "Hybrid power systems"
+  ],
+  "brands": [
+    "Livguard",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/solar_inv_1.jpg",
+    "products/solar_inv_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/solar-inverters-catalog.pdf",
+  "price_range": "₹25,000 - ₹1,50,000",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-panels",
+    "solar-batteries"
+  ]
+}

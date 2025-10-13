@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Rajesh Kumar",
+    "location": "Giridih",
+    "text": "Excellent service and quality products. Very satisfied with the solar installation. The team was professional and completed the work on time.",
+    "rating": 5,
+    "photo": "images/testimonials/customer1.jpg",
+    "project_type": "Residential Solar",
+    "date": "October 2024"
+  },
+  {
+    "name": "Priya Sharma",
+    "location": "Sariya",
+    "text": "Professional team and timely delivery. Highly recommended! Our electricity bills have reduced by 80% after installing the solar system.",
+    "rating": 5,
+    "photo": "images/testimonials/customer2.jpg",
+    "project_type": "Home Solar Installation",
+    "date": "September 2024"
+  },
+  {
+    "name": "Amit Singh",
+    "location": "Rajdhanwar",
+    "text": "Great experience with Kalyani Enterprises. Best prices in the region and excellent after-sales support. Very happy with the battery backup system.",
+    "rating": 5,
+    "project_type": "Solar + Battery System",
+    "date": "August 2024"
+  },
+  {
+    "name": "Sunita Devi",
+    "location": "Dhanbad",
+    "text": "We installed a 5kW solar system for our home. The quality of products is outstanding and the installation was smooth. Highly satisfied!",
+    "rating": 5,
+    "photo": "images/testimonials/customer4.jpg",
+    "project_type": "Rooftop Solar",
+    "date": "July 2024"
+  },
+  {
+    "name": "Vikram Yadav",
+    "location": "Ranchi",
+    "text": "Kalyani Enterprises provided the best solution for our commercial building. The team is knowledgeable and the products are genuine.",
+    "rating": 5,
+    "project_type": "Commercial Solar",
+    "date": "June 2024"
+  },
+  {
+    "name": "Meena Gupta",
+    "location": "Deoghar",
+    "text": "Very happy with the inverter and battery system. Power backup works perfectly even during long power cuts. Thank you Kalyani Enterprises!",
+    "rating": 5,
+    "photo": "images/testimonials/customer6.jpg",
+    "project_type": "Inverter + Battery",
+    "date": "May 2024"
+  }
+]

@@ -1,0 +1,54 @@
+{
+  "name": "Solar Panels",
+  "order": 1,
+  "short_description": "540W - 550W High-Efficiency Solar Modules",
+  "image": "products/livgaurd_solar.png",
+  "features": [
+    "Mono PERC & Halfcut Technology",
+    "540W - 550W High-Efficiency Modules",
+    "25-Year Performance Warranty",
+    "Available from Leading Brands: Livguard Solar, Eastman Solar, Indpower"
+  ],
+  "full_description": "Our premium solar panels utilize the latest Mono PERC and Halfcut technology to deliver maximum efficiency and reliability. Perfect for residential, commercial, and industrial applications across Jharkhand.",
+  "specifications": {
+    "Power Output": "540W - 550W",
+    "Technology": "Mono PERC & Halfcut",
+    "Efficiency": "Up to 21.5%",
+    "Warranty": "25 Years Performance, 12 Years Product",
+    "Dimensions": "2278 x 1134 x 35 mm",
+    "Weight": "28.5 kg",
+    "Cell Type": "182mm Mono-crystalline",
+    "Frame": "Anodized Aluminum Alloy"
+  },
+  "benefits": [
+    "Higher energy output per square meter",
+    "Better performance in low light conditions",
+    "Reduced degradation over time",
+    "Weather and corrosion resistant",
+    "Easy installation and maintenance"
+  ],
+  "applications": [
+    "Residential rooftop installations",
+    "Commercial building complexes",
+    "Industrial power plants",
+    "Agricultural pump systems",
+    "Off-grid and hybrid systems"
+  ],
+  "brands": [
+    "livgaurd-solar",
+    "eastman-solar",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/solar_panel_1.jpg",
+    "products/solar_panel_2.jpg",
+    "products/solar_panel_3.jpg"
+  ],
+  "catalog_pdf": "catalogs/solar-panels-catalog.pdf",
+  "price_range": "₹20,000 - ₹25,000",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-inverters",
+    "solar-batteries"
+  ]
+}

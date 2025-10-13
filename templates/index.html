@@ -36,12 +36,10 @@
 </section>
 
 <!-- Products Section -->
-<!-- Products Section -->
 <section id="products" class="products-section py-4">
     <div class="container">
         <h2 class="section-title text-center mb-3">Our Premium Products</h2>
         <p class="section-subtitle text-center mb-4">High-quality solar panels, batteries, and power solutions</p>
-        
         <div class="cards-grid">
             {% for item in products %}
             {% if item.type == 'Product' %}
@@ -75,14 +73,86 @@
                         <img src="{{ url_for('static', filename='images/' + item.image) }}" 
                             alt="{{ item.name }}" 
                             class="product-img"
-                            onerror="this.onerror=null; this.classList.add('pattern-bg');">
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-img-placeholder pattern-bg" style="display:none;">
+                            {% if 'Inverter' in item.name or 'Power' in item.name %}
+                            <div class="inverter-viz">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                                <div class="sine-wave"></div>
+                            </div>
+                            {% elif 'Solar' in item.name and 'Panel' in item.name %}
+                            <div class="solar-viz">
+                                <i class="bi bi-sun sun-icon"></i>
+                                <div class="solar-rays"></div>
+                                <i class="bi bi-lightning-charge energy-icon"></i>
+                            </div>
+                            {% elif 'Batter' in item.name %}
+                            <div class="battery-viz">
+                                <i class="bi bi-battery-charging battery-icon"></i>
+                                <div class="battery-bars">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            {% else %}
+                            <i class="bi bi-box-seam"></i>
+                            {% endif %}
+                        </div>
                         {% else %}
-                        <div class="product-img-placeholder pattern-bg"></div>
+                        <div class="product-img-placeholder pattern-bg">
+                            {% if 'Inverter' in item.name or 'Power' in item.name %}
+                            <div class="inverter-viz">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                                <div class="sine-wave"></div>
+                            </div>
+                            {% elif 'Solar' in item.name and 'Panel' in item.name %}
+                            <div class="solar-viz">
+                                <i class="bi bi-sun sun-icon"></i>
+                                <div class="solar-rays"></div>
+                                <i class="bi bi-lightning-charge energy-icon"></i>
+                            </div>
+                            {% elif 'Batter' in item.name %}
+                            <div class="battery-viz">
+                                <i class="bi bi-battery-charging battery-icon"></i>
+                                <div class="battery-bars">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            {% elif 'Installation' in item.name %}
+                            <div class="installation-viz">
+                                <i class="bi bi-tools"></i>
+                                <div class="tool-icons">
+                                    <i class="bi bi-wrench-adjustable"></i>
+                                    <i class="bi bi-hammer"></i>
+                                </div>
+                            </div>
+                            {% elif 'Maintenance' in item.name %}
+                            <div class="maintenance-viz">
+                                <i class="bi bi-gear-fill gear-1"></i>
+                                <i class="bi bi-gear-fill gear-2"></i>
+                            </div>
+                            {% elif 'Inspection' in item.name %}
+                            <div class="inspection-viz">
+                                <i class="bi bi-search"></i>
+                                <div class="scan-line"></div>
+                            </div>
+                            {% else %}
+                            <i class="bi bi-box-seam"></i>
+                            {% endif %}
+                        </div>
                         {% endif %}
                     </div>
-                    <div class="card-overlay">
+
+                    <!-- <div class="card-overlay">
                         <span class="learn-more">Learn More →</span>
-                    </div>
+                    </div> -->
+                    <a href="/product/{{ item.id }}" class="card-overlay">
+                        <span class="learn-more">View Details →</span>
+                    </a>
+
                 </div>
             </div>
             {% endif %}
@@ -90,7 +160,6 @@
         </div>
     </div>
 </section>
-
 <!-- Services Section -->
 <section id="services" class="services-section py-5">
     <div class="container">
@@ -118,6 +187,7 @@
                         </div>
                         <h3>{{ item.name }}</h3>
                     </div>
+                    
                     <div class="service-content">
                         <ul class="service-features">
                             {% for feature in item.features %}
@@ -125,19 +195,77 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    
                     <div class="service-image-container">
                         {% if item.image %}
                         <img src="{{ url_for('static', filename='images/' + item.image) }}" 
                             alt="{{ item.name }}" 
                             class="service-img"
-                            onerror="this.onerror=null; this.classList.add('pattern-bg');">
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="service-img-placeholder pattern-bg" style="display:none;">
+                            {% if 'Installation' in item.name %}
+                            <div class="installation-viz">
+                                <i class="bi bi-tools"></i>
+                                <div class="tool-icons">
+                                    <i class="bi bi-wrench-adjustable"></i>
+                                    <i class="bi bi-hammer"></i>
+                                </div>
+                            </div>
+                            {% elif 'Maintenance' in item.name %}
+                            <div class="maintenance-viz">
+                                <i class="bi bi-gear-fill gear-1"></i>
+                                <i class="bi bi-gear-fill gear-2"></i>
+                            </div>
+                            {% elif 'Inspection' in item.name %}
+                            <div class="inspection-viz">
+                                <i class="bi bi-search"></i>
+                                <div class="scan-line"></div>
+                            </div>
+                            {% elif 'Solutions' in item.name %}
+                            <div class="inverter-viz">
+                                <i class="bi bi-lightbulb-fill"></i>
+                                <div class="sine-wave"></div>
+                            </div>
+                            {% else %}
+                            <i class="bi bi-tools"></i>
+                            {% endif %}
+                        </div>
                         {% else %}
-                        <div class="service-img-placeholder pattern-bg"></div>
+                        <div class="service-img-placeholder pattern-bg">
+                            {% if 'Installation' in item.name %}
+                            <div class="installation-viz">
+                                <i class="bi bi-tools"></i>
+                                <div class="tool-icons">
+                                    <i class="bi bi-wrench-adjustable"></i>
+                                    <i class="bi bi-hammer"></i>
+                                </div>
+                            </div>
+                            {% elif 'Maintenance' in item.name %}
+                            <div class="maintenance-viz">
+                                <i class="bi bi-gear-fill gear-1"></i>
+                                <i class="bi bi-gear-fill gear-2"></i>
+                            </div>
+                            {% elif 'Inspection' in item.name %}
+                            <div class="inspection-viz">
+                                <i class="bi bi-search"></i>
+                                <div class="scan-line"></div>
+                            </div>
+                            {% elif 'Solutions' in item.name %}
+                            <div class="solar-viz">
+                                <i class="bi bi-lightbulb-fill sun-icon"></i>
+                                <div class="solar-rays"></div>
+                                <i class="bi bi-lightning-charge energy-icon"></i>
+                            </div>
+                            {% else %}
+                            <i class="bi bi-tools"></i>
+                            {% endif %}
+                        </div>
                         {% endif %}
                     </div>
-                    <div class="card-overlay">
+                    <a href="/service/{{ item.id }}" class="card-overlay">
                         <span class="learn-more">View Details →</span>
-                    </div>
+                    </a>
+
                 </div>
             </div>
             {% endif %}
@@ -146,23 +274,111 @@
     </div>
 </section>
 
+
 <!-- Portfolio Section -->
 <section id="portfolio" class="portfolio-section py-5">
     <div class="container">
-        <h2 class="section-title text-center mb-4">Our Work Portfolio</h2>
-        <p class="text-center mb-5 section-subtitle">Explore our successful solar and battery installations across Jharkhand</p>
+        <h2 class="section-title text-center mb-3">Our Work Portfolio</h2>
+        <p class="section-subtitle text-center mb-5">Successfully delivered 500+ solar installations across Jharkhand</p>
         
         <div class="portfolio-slider">
             <div class="portfolio-track">
-                {% for i in range(1, 13) %}
+                {% for project in portfolio_projects %}
                 <div class="portfolio-item">
-                    <img src="{{ url_for('static', filename='images/portfolio/project_' ~ i ~ '.jpg') }}" 
-                         alt="Project {{ i }}" 
+                    {% if project.image %}
+                    <img src="{{ url_for('static', filename='images/portfolio/' ~ project.image) }}" 
+                         alt="{{ project.title }}" 
                          class="portfolio-img"
-                         onerror="this.src='https://via.placeholder.com/400x300/667eea/ffffff?text=Project+{{ i }}'">
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="portfolio-placeholder" style="display:none;">
+                        {% if project.type == 'Residential' %}
+                        <div class="portfolio-viz residential-viz">
+                            <i class="bi bi-house-fill"></i>
+                            <div class="solar-panels-icon">
+                                <i class="bi bi-sun"></i>
+                            </div>
+                        </div>
+                        {% elif project.type == 'Commercial' %}
+                        <div class="portfolio-viz commercial-viz">
+                            <i class="bi bi-building"></i>
+                            <div class="energy-flow">
+                                <i class="bi bi-lightning-charge"></i>
+                            </div>
+                        </div>
+                        {% elif project.type == 'Industrial' %}
+                        <div class="portfolio-viz industrial-viz">
+                            <i class="bi bi-hammer"></i>
+                            <i class="bi bi-gear-fill rotating"></i>
+                        </div>
+                        {% elif project.type == 'Institutional' %}
+                        <div class="portfolio-viz institutional-viz">
+                            <i class="bi bi-building-gear"></i>
+                            <div class="pulse-circle"></div>
+                        </div>
+                        {% elif project.type == 'Off-Grid' %}
+                        <div class="portfolio-viz offgrid-viz">
+                            <i class="bi bi-battery-charging"></i>
+                            <i class="bi bi-sun"></i>
+                        </div>
+                        {% else %}
+                        <div class="portfolio-viz default-viz">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="portfolio-placeholder">
+                        {% if project.type == 'Residential' %}
+                        <div class="portfolio-viz residential-viz">
+                            <i class="bi bi-house-fill"></i>
+                            <div class="solar-panels-icon">
+                                <i class="bi bi-sun"></i>
+                            </div>
+                        </div>
+                        {% elif project.type == 'Commercial' %}
+                        <div class="portfolio-viz commercial-viz">
+                            <i class="bi bi-building"></i>
+                            <div class="energy-flow">
+                                <i class="bi bi-lightning-charge"></i>
+                            </div>
+                        </div>
+                        {% elif project.type == 'Industrial' %}
+                        <div class="portfolio-viz industrial-viz">
+                            <i class="bi bi-hammer"></i>
+                            <i class="bi bi-gear-fill rotating"></i>
+                        </div>
+                        {% elif project.type == 'Institutional' %}
+                        <div class="portfolio-viz institutional-viz">
+                            <i class="bi bi-building-gear"></i>
+                            <div class="pulse-circle"></div>
+                        </div>
+                        {% elif project.type == 'Off-Grid' %}
+                        <div class="portfolio-viz offgrid-viz">
+                            <i class="bi bi-battery-charging"></i>
+                            <i class="bi bi-sun"></i>
+                        </div>
+                        {% else %}
+                        <div class="portfolio-viz default-viz">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
                     <div class="portfolio-overlay">
-                        <h4>Installation Project {{ i }}</h4>
-                        <p>Solar & Battery Installation</p>
+                        <div class="portfolio-badge">{{ project.type }}</div>
+                        <h4>{{ project.title }}</h4>
+                        <p class="portfolio-description">{{ project.description }}</p>
+                        <div class="portfolio-details">
+                            <span><i class="bi bi-lightning-charge-fill"></i> {{ project.capacity }}</span>
+                            <span><i class="bi bi-geo-alt-fill"></i> {{ project.location }}</span>
+                        </div>
+                        <div class="portfolio-meta">
+                            <span><i class="bi bi-calendar-check"></i> {{ project.date }}</span>
+                            {% if project.savings %}
+                            <span><i class="bi bi-piggy-bank-fill"></i> ₹{{ project.savings }}/mo</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -176,33 +392,36 @@
     </div>
 </section>
 
+
 <!-- Testimonials Section -->
 <section id="testimonials" class="testimonials-section py-5">
     <div class="container">
         <h2 class="section-title text-center mb-4">Client Testimonials</h2>
-        <p class="text-center mb-5 section-subtitle">What our satisfied customers say about us</p>
+        <p class="section-subtitle text-center mb-5">What our satisfied customers say about us</p>
         
         <div class="testimonials-slider">
             <div class="testimonials-track">
                 {% for testimonial in testimonials %}
                 <div class="testimonial-card">
                     <div class="testimonial-header">
-                    <div class="testimonial-avatar">
-                        {% if testimonial.photo %}
-                        <img src="{{ url_for('static', filename=testimonial.photo) }}" alt="{{ testimonial.name }}" class="testimonial-photo" onerror="this.style.display='none'"/>
-                        {% else %}
-                        <i class="bi bi-person-circle"></i>
-                        {% endif %}
-                    </div>
-                    <div class="testimonial-info">
-                        <h5>{{ testimonial.name }}</h5>
-                        <p class="text-muted small">{{ testimonial.location }}</p>
-                    </div>
+                        <div class="testimonial-avatar">
+                            {% if testimonial.photo %}
+                            <img src="{{ url_for('static', filename=testimonial.photo) }}" 
+                                 alt="{{ testimonial.name }}" 
+                                 class="testimonial-photo">
+                            {% else %}
+                            <i class="bi bi-person-circle"></i>
+                            {% endif %}
+                        </div>
+                        <div class="testimonial-info">
+                            <h5>{{ testimonial.name }}</h5>
+                            <p class="text-muted small">{{ testimonial.location }}</p>
+                        </div>
                     </div>
                     <div class="testimonial-rating">
-                    {% for _ in range(testimonial.rating) %}
-                    <i class="bi bi-star-fill"></i>
-                    {% endfor %}
+                        {% for _ in range(testimonial.rating) %}
+                        <i class="bi bi-star-fill"></i>
+                        {% endfor %}
                     </div>
                     <p class="testimonial-text">"{{ testimonial.text }}"</p>
                 </div>
@@ -220,37 +439,142 @@
 <!-- About Section -->
 <section id="about" class="about-section py-5">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <img src="{{ url_for('static', filename='images/KE_Banner.jpeg') }}" 
-                     alt="Kalyani Enterprises" 
-                     class="about-img"
-                     onerror="this.src='https://via.placeholder.com/600x400/667eea/ffffff?text=Kalyani+Enterprises'">
+        <h2 class="section-title text-center mb-3">About Us</h2>
+        <p class="section-subtitle text-center mb-5">Your Trusted Partner in Solar Energy Solutions</p>
+        
+        <!-- Stats Section -->
+        <div class="about-stats mb-5">
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Projects Completed</p>
             </div>
-            <div class="col-md-6">
-                <h2 class="section-title">About Us</h2>
-                <p class="about-text">
-                    Kalyani Enterprises is a trusted authorized distributor for <strong>Livguard Solar, Livguard Energy, Eastman Solar & Indpower</strong> products, proudly serving customers across Jharkhand.
-                </p>
-                <p class="about-text">
-                    With years of experience in the energy solutions industry, we provide high-quality solar panels, inverters, batteries, and complete power backup systems for residential, commercial, and industrial applications.
-                </p>
-                <div class="about-features">
-                    <div class="feature-item">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>Authorized Dealer of Premium Brands</span>
+            <div class="stat-item">
+                <h3>4+</h3>
+                <p>Years Experience</p>
+            </div>
+            <div class="stat-item">
+                <h3>1000+</h3>
+                <p>Happy Customers</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Support Available</p>
+            </div>
+        </div>
+        
+        <!-- Two Column Layout -->
+        <div class="row align-items-center g-4">
+            <!-- LEFT: Animated Image Collage -->
+            <div class="col-lg-6">
+                <div class="about-collage">
+                    {% if about_images.all|length > 0 %}
+                    <!-- Main Large Image -->
+                    <div class="collage-main">
+                        <img src="{{ url_for('static', filename=about_images.all[0]) }}" 
+                             alt="Solar Products" 
+                             class="collage-img main-img"
+                             onerror="this.src='https://via.placeholder.com/400x500/667eea/ffffff?text=Solar+Products'">
                     </div>
-                    <div class="feature-item">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>Competitive Pricing & Quality Assurance</span>
+                    
+                    <!-- Grid of Smaller Images (4 images) -->
+                    <div class="collage-grid">
+                        {% for i in range(1, 5) %}
+                        {% if i < about_images.all|length %}
+                        <div class="collage-item item-{{ i }}">
+                            <img src="{{ url_for('static', filename=about_images.all[i]) }}" 
+                                 alt="Product {{ i }}"
+                                 onerror="this.src='https://via.placeholder.com/200x200/764ba2/ffffff?text=Product'">
+                        </div>
+                        {% else %}
+                        <div class="collage-item item-{{ i }}">
+                            <img src="https://via.placeholder.com/200x200/667eea/ffffff?text=Product+{{ i }}" 
+                                 alt="Product {{ i }}">
+                        </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
-                    <div class="feature-item">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>Professional Installation Services</span>
+                    {% else %}
+                    <!-- Fallback if no images -->
+                    <div class="about-placeholder">
+                        <div class="placeholder-content">
+                            <i class="bi bi-sun" style="font-size: 3rem; color: var(--brand-1);"></i>
+                            <i class="bi bi-battery-charging" style="font-size: 3rem; color: var(--brand-2);"></i>
+                            <i class="bi bi-lightning-charge" style="font-size: 3rem; color: var(--brand-1);"></i>
+                        </div>
                     </div>
-                    <div class="feature-item">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>After-Sales Support & Warranty</span>
+                    {% endif %}
+                    
+                    <!-- Floating Brand Badges -->
+                    <div class="brand-badges-float">
+                        <div class="brand-badge-float">
+                            <i class="bi bi-award-fill"></i>
+                            <span>Authorized Dealer</span>
+                        </div>
+                        <div class="brand-badge-float">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Quality Assured</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="collage-decoration decoration-1"></div>
+                    <div class="collage-decoration decoration-2"></div>
+                </div>
+            </div>
+            
+            <!-- RIGHT: Content -->
+            <div class="col-lg-6">
+                <div class="about-content">
+                    <p class="about-text">
+                        Kalyani Enterprises is a trusted authorized distributor for 
+                        <strong>Livguard Solar, Livguard Energy, Eastman Solar & Indpower</strong> products, 
+                        proudly serving customers across Jharkhand.
+                    </p>
+                    
+                    <p class="about-text">
+                        With years of experience in the energy solutions industry, we provide high-quality 
+                        solar panels, inverters, batteries, and complete power backup systems for residential, 
+                        commercial, and industrial applications.
+                    </p>
+                    
+                    <ul class="about-features">
+                        <li>
+                            <i class="bi bi-award-fill"></i>
+                            <div class="feature-content">
+                                <h5>Authorized Dealer of Premium Brands</h5>
+                                <p>Official distributor for leading solar brands</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-currency-rupee"></i>
+                            <div class="feature-content">
+                                <h5>Competitive Pricing & Quality Assurance</h5>
+                                <p>Best prices with guaranteed quality products</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-tools"></i>
+                            <div class="feature-content">
+                                <h5>Professional Installation Services</h5>
+                                <p>Expert technicians for all types of installations</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="bi bi-shield-check"></i>
+                            <div class="feature-content">
+                                <h5>After-Sales Support & Warranty</h5>
+                                <p>Comprehensive support and warranty coverage</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="about-cta">
+                        <a href="#contact" class="btn btn-primary-about">
+                            <i class="bi bi-telephone-fill"></i> Get Free Consultation
+                        </a>
+                        <a href="#portfolio" class="btn btn-outline-about">
+                            <i class="bi bi-images"></i> View Our Projects
+                        </a>
                     </div>
                 </div>
             </div>

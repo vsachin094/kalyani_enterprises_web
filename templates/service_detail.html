@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Service Detail Section -->
+<section class="service-detail-section py-5" style="margin-top: 80px;">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/#services">Services</a></li>
+                <li class="breadcrumb-item active">{{ service.name }}</li>
+            </ol>
+        </nav>
+        
+        <!-- Service Header -->
+        <div class="row mb-5">
+            <div class="col-lg-6">
+                 <img src="{{ url_for('static', filename='images/' + service.image) }}"
+                     alt="{{ service.name }}" 
+                     class="img-fluid rounded shadow">
+            </div>
+
+           >
+
+            
+
+            
+            <div class="col-lg-6">
+                <h1 class="mb-3">{{ service.name }}</h1>
+                <p class="lead">{{ service.short_description }}</p>
+                <p>{{ service.full_description }}</p>
+                
+                {% if service.duration %}
+                <p><strong>Duration:</strong> {{ service.duration }}</p>
+                {% endif %}
+                
+                {% if service.warranty %}
+                <p><strong>Warranty:</strong> {{ service.warranty }}</p>
+                {% endif %}
+                
+                <div class="mt-4">
+                    <a href="/#contact" class="btn btn-primary btn-lg">
+                        <i class="bi bi-telephone-fill"></i> Request Service
+                    </a>
+                    <a href="https://wa.me/919876543210?text=I need {{ service.name }}" 
+                       class="btn btn-success btn-lg" target="_blank">
+                        <i class="bi bi-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Details -->
+        {% if service.process %}
+        <div class="service-process mb-5">
+            <h3 class="text-center mb-4">Our Process</h3>
+            <div class="row">
+                {% for step in service.process %}
+                <div class="col-md-3 mb-3">
+                    <div class="process-step text-center p-4 border rounded">
+                        <div class="step-number mb-3">{{ step.step }}</div>
+                        <h5>{{ step.title }}</h5>
+                        <p>{{ step.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if service.included_services %}
+        <div class="included-services mb-5">
+            <h3 class="mb-4">What's Included</h3>
+            <div class="row">
+                {% for item in service.included_services %}
+                <div class="col-md-6 mb-2">
+                    <i class="bi bi-check-circle-fill text-success"></i> {{ item }}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if service.service_areas %}
+        <div class="service-areas mb-5">
+            <h3 class="mb-4">Service Areas</h3>
+            <div class="d-flex flex-wrap gap-2">
+                {% for area in service.service_areas %}
+                <span class="badge bg-primary">{{ area }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+.step-number {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background: var(--brand-1);
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto;
+}
+</style>
+{% endblock %}

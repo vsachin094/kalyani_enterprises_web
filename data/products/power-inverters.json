@@ -1,0 +1,51 @@
+{
+  "name": "Power Inverters",
+  "order": 3,
+  "short_description": "Pure Sine Wave Inverters for Home & Office",
+  "image": "products/power_inverter.png",
+  "features": [
+    "Pure Sine Wave Output for Sensitive Equipment",
+    "Smart Battery Management System",
+    "LCD Display & Overload Protection",
+    "Options from Livguard, Eastman & Indpower"
+  ],
+  "full_description": "Advanced pure sine wave inverters providing stable and reliable power backup for homes and offices. Features intelligent battery management and comprehensive protection systems.",
+  "specifications": {
+    "Capacity Range": "800VA - 3000VA",
+    "Input Voltage": "230V AC",
+    "Output": "Pure Sine Wave",
+    "Efficiency": "Up to 90%",
+    "Battery Type": "12V/24V",
+    "Warranty": "2 Years"
+  },
+  "benefits": [
+    "Pure sine wave for sensitive electronics",
+    "Intelligent battery charging",
+    "Overload and short circuit protection",
+    "Low maintenance operation",
+    "Silent operation"
+  ],
+  "applications": [
+    "Home power backup",
+    "Office equipment",
+    "Medical devices",
+    "Computer systems",
+    "Telecommunication equipment"
+  ],
+  "brands": [
+    "Livguard",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/inverter_1.jpg",
+    "products/inverter_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/power-inverters-catalog.pdf",
+  "price_range": "₹5,000 - ₹25,000",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-batteries",
+    "solar-inverters"
+  ]
+}

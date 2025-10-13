@@ -1,0 +1,104 @@
+[
+  {
+    "title": "Residential Rooftop Solar",
+    "type": "Residential",
+    "capacity": "5kW",
+    "location": "Giridih",
+    "date": "Oct 2024",
+    "savings": "12,000",
+    "image": "project_1.jpeg",
+    "description": "Complete grid-tied solar system with net metering",
+    "client": "Mr. Sharma",
+    "details": {
+      "panels": "10 x 550W Mono PERC",
+      "inverter": "5kW Hybrid Inverter",
+      "mounting": "Rooftop mounting structure",
+      "grid_type": "On-Grid with Net Metering"
+    }
+  },
+  {
+    "title": "Commercial Complex Installation",
+    "type": "Commercial",
+    "capacity": "25kW",
+    "location": "Ranchi",
+    "date": "Sep 2024",
+    "savings": "45,000",
+    "image": "project_2.jpg",
+    "description": "3-phase system with battery backup and monitoring",
+    "client": "ABC Enterprises",
+    "details": {
+      "panels": "45 x 550W Solar Panels",
+      "inverter": "25kW Three Phase",
+      "battery": "150Ah x 8 Units",
+      "grid_type": "Hybrid System"
+    }
+  },
+  {
+    "title": "Farm House Off-Grid System",
+    "type": "Off-Grid",
+    "capacity": "10kW",
+    "location": "Dhanbad",
+    "date": "Aug 2024",
+    "savings": "18,000",
+    "image": "project_3.jpg",
+    "description": "Complete energy independence with lithium batteries",
+    "client": "Singh Farm House",
+    "details": {
+      "panels": "18 x 550W Panels",
+      "inverter": "10kW Off-Grid Inverter",
+      "battery": "Lithium 10kWh Storage",
+      "grid_type": "Standalone Off-Grid"
+    }
+  },
+  {
+    "title": "Industrial Warehouse Solar",
+    "type": "Industrial",
+    "capacity": "50kW",
+    "location": "Bokaro",
+    "date": "Jul 2024",
+    "savings": "85,000",
+    "image": "project_4.jpg",
+    "description": "Large-scale grid-tied installation for factory",
+    "client": "XYZ Industries Ltd.",
+    "details": {
+      "panels": "90 x 550W Industrial Grade",
+      "inverter": "50kW String Inverter",
+      "mounting": "Ground mounting system",
+      "grid_type": "On-Grid Net Metering"
+    }
+  },
+  {
+    "title": "School Building Installation",
+    "type": "Institutional",
+    "capacity": "15kW",
+    "location": "Deoghar",
+    "date": "Jun 2024",
+    "savings": "25,000",
+    "image": "project_5.jpg",
+    "description": "Educational institution solar with government subsidy",
+    "client": "Deoghar Public School",
+    "details": {
+      "panels": "27 x 550W Panels",
+      "inverter": "15kW Grid-Tied",
+      "subsidy": "40% Government Subsidy",
+      "grid_type": "On-Grid"
+    }
+  },
+  {
+    "title": "Petrol Pump Solar Setup",
+    "type": "Commercial",
+    "capacity": "20kW",
+    "location": "Hazaribagh",
+    "date": "May 2024",
+    "savings": "35,000",
+    "image": "project_6.jpg",
+    "description": "Hybrid system for 24/7 pump operations",
+    "client": "HP Petrol Pump",
+    "details": {
+      "panels": "36 x 550W Panels",
+      "inverter": "20kW Hybrid Inverter",
+      "battery": "200Ah x 6 Units",
+      "grid_type": "Hybrid with Backup"
+    }
+  }
+]

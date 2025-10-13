@@ -1,0 +1,42 @@
+{
+  "name": "Custom Power Solutions",
+  "order": 4,
+  "short_description": "Tailored Power Solutions for Every Need",
+  "image": "services/power_solutions.png",
+  "features": [
+    "Tailored Solutions for Petrol Pumps, Buildings & Factories",
+    "Grid-Tied, Hybrid & Off-Grid Setups",
+    "Project Design, Supply & Installation",
+    "Turnkey Execution from Start to Finish"
+  ],
+  "full_description": "End-to-end custom power solutions designed specifically for your application, whether residential, commercial, or industrial.",
+  "solutions": [
+    {
+      "type": "Petrol Pumps",
+      "description": "Complete backup solutions with battery storage for uninterrupted operations"
+    },
+    {
+      "type": "Commercial Buildings",
+      "description": "Grid-tied systems with net metering for maximum savings"
+    },
+    {
+      "type": "Industries",
+      "description": "High-capacity systems for reducing operational costs"
+    },
+    {
+      "type": "Agriculture",
+      "description": "Solar pump controllers and standalone systems"
+    }
+  ],
+  "project_types": [
+    "On-Grid Solar",
+    "Off-Grid Solar",
+    "Hybrid Solar",
+    "Solar + DG Hybrid",
+    "Microgrid Solutions"
+  ],
+  "gallery": [
+    "services/custom_1.jpg",
+    "services/custom_2.jpg"
+  ]
+}

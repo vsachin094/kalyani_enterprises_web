@@ -1,0 +1,35 @@
+{
+  "name": "Site Inspection & Consultation",
+  "order": 3,
+  "short_description": "Expert Site Assessment & Energy Audit",
+  "image": "services/site_inspection.png",
+  "features": [
+    "Detailed Site Assessment for Solar Feasibility",
+    "Energy Load Analysis",
+    "System Design Recommendations",
+    "Customized Power Solutions"
+  ],
+  "full_description": "Comprehensive site inspection and consultation services to determine the best solar solution for your specific needs and location.",
+  "inspection_includes": [
+    "Roof/ground assessment",
+    "Shadow analysis",
+    "Structural evaluation",
+    "Energy consumption audit",
+    "System sizing recommendation",
+    "ROI calculation",
+    "Subsidy guidance"
+  ],
+  "deliverables": [
+    "Detailed inspection report",
+    "System design proposal",
+    "Cost estimation",
+    "ROI analysis",
+    "Subsidy information"
+  ],
+  "cost": "Free for systems above 5kW",
+  "duration": "2-3 hours",
+  "gallery": [
+    "services/inspect_1.jpg",
+    "services/inspect_2.jpg"
+  ]
+}

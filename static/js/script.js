@@ -22,17 +22,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 function updateNavbar() {
     const mainNav = document.getElementById('mainNav');
     const scrollTop = window.scrollY;
-    const hero = document.querySelector('.hero-section'); // Assuming you have a hero section
+    const hero = document.querySelector('.hero-section');
     
     if (!mainNav || !hero) return;
 
     const heroBottom = hero.offsetTop + hero.offsetHeight;
     const scrollPercent = Math.min((scrollTop / heroBottom) * 100, 100);
     
-    // Check if we're over a light background
     if (scrollTop > 50) {
         mainNav.classList.add('navbar-scrolled');
-        // Add smooth opacity transition
         mainNav.style.background = `rgba(255, 255, 255, ${Math.min(scrollPercent / 100 * 0.9, 0.9)})`;
         mainNav.style.backdropFilter = `blur(${Math.min(scrollPercent / 10, 10)}px)`;
     } else {
@@ -42,7 +40,7 @@ function updateNavbar() {
     }
 }
 
-// Debounce function for better performance
+// Debounce function
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -57,14 +55,9 @@ function debounce(func, wait) {
 
 // Initialize navbar behavior
 document.addEventListener('DOMContentLoaded', function() {
-    // Initial check
     updateNavbar();
-    
-    // Handle scroll with debouncing for better performance
     const debouncedScroll = debounce(() => requestAnimationFrame(updateNavbar), 10);
     window.addEventListener('scroll', debouncedScroll, { passive: true });
-    
-    // Handle window resize
     window.addEventListener('resize', debouncedScroll, { passive: true });
 });
 
@@ -103,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 message: document.getElementById('message').value
             };
             
-            // Disable submit button
             const submitBtn = this.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Sending...';
@@ -125,11 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     messageDiv.innerHTML = '<div class="alert alert-danger"><strong>Error!</strong> ' + data.message + '</div>';
                 }
                 
-                // Re-enable submit button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="bi bi-send-fill"></i> Submit Inquiry';
                 
-                // Clear message after 5 seconds
                 setTimeout(() => {
                     messageDiv.innerHTML = '';
                 }, 5000);
@@ -138,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 const messageDiv = document.getElementById('formMessage');
                 messageDiv.innerHTML = '<div class="alert alert-danger"><strong>Error!</strong> Failed to submit form. Please try calling us directly.</div>';
                 
-                // Re-enable submit button
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<i class="bi bi-send-fill"></i> Submit Inquiry';
                 
@@ -156,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (portfolioTrack && prevBtn && nextBtn) {
         let currentPosition = 0;
-        const itemWidth = 370; // 350px + 20px gap
+        const itemWidth = 370;
         
         prevBtn.addEventListener('click', function() {
             currentPosition += itemWidth;
@@ -173,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Testimonials Slider
+// Testimonials Slider with Auto-slide (UPDATED)
 document.addEventListener('DOMContentLoaded', function() {
     const testimonialsTrack = document.querySelector('.testimonials-track');
     const prevBtn = document.querySelector('.btn-testimonial-prev');
@@ -182,19 +171,56 @@ document.addEventListener('DOMContentLoaded', function() {
     if (testimonialsTrack && prevBtn && nextBtn) {
         let currentPosition = 0;
         const itemWidth = 375; // 350px + 25px gap
+        let autoSlideInterval;
         
+        // Auto-slide function
+        function autoSlide() {
+            const maxScroll = -(testimonialsTrack.scrollWidth - testimonialsTrack.parentElement.offsetWidth);
+            currentPosition -= itemWidth;
+            
+            // Loop back to start if reached end
+            if (currentPosition < maxScroll) {
+                currentPosition = 0;
+            }
+            
+            testimonialsTrack.style.transform = `translateX(${currentPosition}px)`;
+        }
+        
+        // Start auto-slide
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(autoSlide, 10000); // 10 seconds
+        }
+        
+        // Stop auto-slide
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+        
+        // Manual Previous
         prevBtn.addEventListener('click', function() {
+            stopAutoSlide();
             currentPosition += itemWidth;
             if (currentPosition > 0) currentPosition = 0;
             testimonialsTrack.style.transform = `translateX(${currentPosition}px)`;
+            startAutoSlide();
         });
         
+        // Manual Next
         nextBtn.addEventListener('click', function() {
+            stopAutoSlide();
             const maxScroll = -(testimonialsTrack.scrollWidth - testimonialsTrack.parentElement.offsetWidth);
             currentPosition -= itemWidth;
             if (currentPosition < maxScroll) currentPosition = maxScroll;
             testimonialsTrack.style.transform = `translateX(${currentPosition}px)`;
+            startAutoSlide();
         });
+        
+        // Pause on hover
+        testimonialsTrack.addEventListener('mouseenter', stopAutoSlide);
+        testimonialsTrack.addEventListener('mouseleave', startAutoSlide);
+        
+        // Start auto-slide on page load
+        startAutoSlide();
     }
 });
 
@@ -223,15 +249,104 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Image error handling
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.product-img, .service-img').forEach(img => {
+        img.addEventListener('error', function() {
+            this.style.display = 'none';
+            if (this.nextElementSibling) {
+                this.nextElementSibling.style.display = 'flex';
+            }
+        });
+    });
+});
+
+// Navbar scroll class toggle
 window.addEventListener('scroll', function() {
     const nav = document.querySelector('.navbar');
-    if (window.scrollY > 40) {
+    if (nav && window.scrollY > 40) {
         nav.classList.add('scrolled');
-    } else {
+    } else if (nav) {
         nav.classList.remove('scrolled');
     }
 });
 
-
-
+// About Section - Scroll-Based Image Shuffle (Slow & Smooth)
+document.addEventListener('DOMContentLoaded', function() {
+    const mainImg = document.querySelector('.collage-main img');
+    const gridItems = document.querySelectorAll('.collage-grid .collage-item img');
+    const aboutSection = document.querySelector('.about-section');
+    
+    if (mainImg && mainImg.dataset.images && aboutSection) {
+        const collageImages = JSON.parse(mainImg.dataset.images);
+        
+        if (collageImages.length > 0 && gridItems.length > 0) {
+            let currentIndex = 0;
+            let hasShuffledOnce = false;
+            let isShuffling = false;
+            
+            // Smooth image change function
+            function changeImage(imgElement, newSrc) {
+                return new Promise((resolve) => {
+                    imgElement.style.opacity = '0';
+                    setTimeout(() => {
+                        imgElement.src = `/static/${newSrc}`;
+                        imgElement.style.opacity = '1';
+                        resolve();
+                    }, 400);
+                });
+            }
+            
+            // Shuffle function
+            async function shuffleImages() {
+                if (isShuffling) return;
+                isShuffling = true;
+                
+                // Change main image
+                currentIndex = (currentIndex + 1) % collageImages.length;
+                await changeImage(mainImg, collageImages[currentIndex]);
+                
+                // Change grid images one by one with delay
+                for (let i = 0; i < gridItems.length; i++) {
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                    const randomIndex = Math.floor(Math.random() * collageImages.length);
+                    await changeImage(gridItems[i], collageImages[randomIndex]);
+                }
+                
+                isShuffling = false;
+            }
+            
+            // Intersection Observer for scroll detection
+            const observerOptions = {
+                threshold: 0.3,
+                rootMargin: '0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasShuffledOnce) {
+                        // First shuffle when scrolled into view
+                        setTimeout(() => shuffleImages(), 500);
+                        hasShuffledOnce = true;
+                    }
+                });
+            }, observerOptions);
+            
+            observer.observe(aboutSection);
+            
+            // Slower auto-shuffle every 12 seconds (only after first view)
+            setInterval(() => {
+                if (hasShuffledOnce) {
+                    shuffleImages();
+                }
+            }, 12000); // 12 seconds instead of 5
+            
+            // Add smooth opacity transitions
+            mainImg.style.transition = 'opacity 0.4s ease';
+            gridItems.forEach(img => {
+                img.style.transition = 'opacity 0.4s ease';
+            });
+        }
+    }
+});
 

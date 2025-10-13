@@ -1,0 +1,51 @@
+{
+  "name": "Solar Batteries",
+  "order": 2,
+  "short_description": "Deep Cycle Batteries for Solar Applications",
+  "image": "products/livgaurd_bat.png",
+  "features": [
+    "Tall Tubular & Flat Plate Options",
+    "Deep Cycle Design for Solar Applications",
+    "Long Backup Duration with Low Maintenance",
+    "Available from Livguard Energy, Eastman & Indpower"
+  ],
+  "full_description": "High-quality deep cycle batteries designed specifically for solar energy storage. Built to withstand frequent charge-discharge cycles with minimal maintenance requirements.",
+  "specifications": {
+    "Capacity Range": "100Ah - 220Ah",
+    "Type": "Tubular / Flat Plate",
+    "Voltage": "12V",
+    "Warranty": "5 Years",
+    "Life Cycles": "1500+ cycles at 80% DOD",
+    "Charge Time": "8-10 hours"
+  },
+  "benefits": [
+    "Long backup duration",
+    "Low maintenance requirements",
+    "Resistant to power fluctuations",
+    "Excellent charge acceptance",
+    "Suitable for deep discharge applications"
+  ],
+  "applications": [
+    "Solar home systems",
+    "Off-grid installations",
+    "Backup power systems",
+    "Inverter applications",
+    "Hybrid solar systems"
+  ],
+  "brands": [
+    "Livguard Energy",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/battery_1.jpg",
+    "products/battery_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/solar-batteries-catalog.pdf",
+  "price_range": "₹8,000 - ₹18,000",
+  "availability": "In Stock",
+  "related_products": [
+    "power-inverters",
+    "solar-panels"
+  ]
+}

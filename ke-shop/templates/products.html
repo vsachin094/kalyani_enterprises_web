@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Our Products</h1>
+    
+    <div class="mb-4">
+        <a href="/products" class="btn {{ 'btn-primary' if not selected_category else 'btn-outline-primary' }} btn-sm">All</a>
+        {% for cat in categories %}
+        <a href="/products?category={{ cat }}" class="btn {{ 'btn-primary' if selected_category == cat else 'btn-outline-primary' }} btn-sm">{{ cat }}</a>
+        {% endfor %}
+    </div>
+    
+    {% if products %}
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card product-card">
+                <img src="{{ url_for('static', filename=product.image) if product.image else 'https://via.placeholder.com/400x300/667eea/ffffff?text=' + product.name }}" 
+                     class="card-img-top" alt="{{ product.name }}" style="height:250px;object-fit:cover">
+                <div class="card-body">
+                    <span class="badge bg-info mb-2">{{ product.brand }}</span>
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text text-muted small">{{ product.short_description }}</p>
+                    <h4 class="text-primary">{{ product.get_price_range() }}</h4>
+                    <p class="text-muted small mb-3">{{ product.variants.count() }} variants available</p>
+                    <a href="/product/{{ product.id }}" class="btn btn-primary w-100">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">No products found in this category.</div>
+    {% endif %}
+</div>
+{% endblock %}

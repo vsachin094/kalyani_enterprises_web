@@ -1,0 +1,74 @@
+ {% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Order #{{ order.order_number }}</h1>
+    
+    <!-- Order Status Timeline -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="progress" style="height:30px">
+                {% set status_percent = 20 if order.status == 'pending' else 40 if order.status == 'confirmed' else 60 if order.status == 'processing' else 80 if order.status == 'shipped' else 100 if order.status == 'delivered' else 0 %}
+                <div class="progress-bar bg-{{ 'success' if order.status == 'delivered' else 'primary' }}" style="width:{{ status_percent }}%">
+                    {{ order.status.capitalize() }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Order Items</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in order.items %}
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                        <div>
+                            <h6 class="mb-1">{{ item.product_name }}</h6>
+                            <p class="text-muted small mb-0">{{ item.variant_capacity }} | {{ (item.variant_warranty / 12)|round(1) }} Year Warranty</p>
+                            <p class="mb-0">₹{{ "{:,.0f}".format(item.price) }} × {{ item.quantity }}</p>
+                        </div>
+                        <h5 class="text-primary mb-0">₹{{ "{:,.0f}".format(item.subtotal) }}</h5>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="text-end mt-4">
+                        <p class="mb-2">Subtotal: <strong>₹{{ "{:,.0f}".format(order.subtotal) }}</strong></p>
+                        <p class="mb-2">Shipping: <strong>₹{{ "{:,.0f}".format(order.shipping_charge) }}</strong></p>
+                        <hr>
+                        <h4>Total: <span class="text-primary">₹{{ "{:,.0f}".format(order.total) }}</span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Order Info</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Order Date:</strong><br>{{ order.created_at.strftime('%B %d, %Y %H:%M') }}</p>
+                    <p class="mb-2"><strong>Payment Method:</strong><br>{{ order.payment_method.upper() }}</p>
+                    <p class="mb-0"><strong>Status:</strong><br>
+                        {% if order.status == 'delivered' %}
+                        <span class="badge bg-success">Delivered</span>
+                        {% elif order.status == 'shipped' %}
+                        <span class="badge bg-info">Shipped</span>
+                        {% elif order.status == 'cancelled' %}
+                        <span class="badge bg-danger">Cancelled</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">{{ order.status.capitalize() }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            
+            <a href="/my-orders" class="btn btn-outline-secondary w-100 mt-3">
+                <i class="bi bi-arrow-left"></i> Back to Orders
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

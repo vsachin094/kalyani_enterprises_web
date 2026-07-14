@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <i class="bi bi-check-circle-fill text-success" style="font-size:5rem"></i>
+        <h1 class="mt-4">Order Placed Successfully!</h1>
+        <p class="lead">Thank you for your order</p>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Order Details</h5>
+                    <hr>
+                    <div class="mb-3">
+                        <strong>Order Number:</strong>
+                        <h4 class="text-primary">{{ order.order_number }}</h4>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Order Total:</strong>
+                        <h4>₹{{ "{:,.0f}".format(order.total) }}</h4>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Payment Method:</strong>
+                        <p class="text-capitalize">{{ order.payment_method }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Status:</strong>
+                        <span class="badge bg-warning">{{ order.status }}</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h6>Items Ordered:</h6>
+                    {% for item in order.items %}
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>{{ item.product_name }} ({{ item.variant_capacity }}) × {{ item.quantity }}</span>
+                        <strong>₹{{ "{:,.0f}".format(item.subtotal) }}</strong>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="alert alert-info mt-4">
+                        <i class="bi bi-info-circle"></i> We'll contact you shortly to confirm your order delivery details.
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="/products" class="btn btn-primary">Continue Shopping</a>
+                        <a href="/" class="btn btn-outline-secondary">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

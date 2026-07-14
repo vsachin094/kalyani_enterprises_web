@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-plus-circle"></i> Add New Product</h1>
+        <a href="/admin/products" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Products
+        </a>
+    </div>
+    
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Product Details -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Product Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Product Name *</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Brand *</label>
+                                <input type="text" class="form-control" name="brand" required 
+                                       placeholder="e.g., Livguard">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Category *</label>
+                                <select class="form-select" name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Batteries">Batteries</option>
+                                    <option value="Solar Panels">Solar Panels</option>
+                                    <option value="Inverters">Inverters</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Product Image</label>
+                                <input type="file" class="form-control" name="image" accept="image/*">
+                                <small class="text-muted">Max 5MB</small>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Short Description</label>
+                                <textarea class="form-control" name="short_description" rows="2" 
+                                          placeholder="Brief product description"></textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Full Description (Optional)</label>
+                                <textarea class="form-control" name="full_description" rows="4" 
+                                          placeholder="Detailed product information"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Variants -->
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Product Variants</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="variants-container">
+                            <div class="row variant-row mb-3 pb-3 border-bottom">
+                                <div class="col-md-3">
+                                    <label class="form-label small">Capacity</label>
+                                    <input type="text" class="form-control" name="variant_capacity_0" 
+                                           placeholder="e.g., 100Ah" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small">Warranty (months)</label>
+                                    <input type="number" class="form-control" name="variant_warranty_0" 
+                                           placeholder="36" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small">Price (₹)</label>
+                                    <input type="number" class="form-control" name="variant_price_0" 
+                                           placeholder="15000" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label small">Stock</label>
+                                    <input type="number" class="form-control" name="variant_stock_0" 
+                                           placeholder="10" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="addVariant()">
+                            <i class="bi bi-plus"></i> Add Another Variant
+                        </button>
+                        <input type="hidden" name="variant_count" id="variant_count" value="1">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card sticky-top" style="top:20px">
+                    <div class="card-body">
+                        <h5 class="card-title">Actions</h5>
+                        <button type="submit" class="btn btn-success w-100 btn-lg mb-2">
+                            <i class="bi bi-check-circle"></i> Save Product
+                        </button>
+                        <a href="/admin/products" class="btn btn-outline-secondary w-100">Cancel</a>
+                        
+                        <hr>
+                        <div class="alert alert-info small mb-0">
+                            <strong>Tip:</strong> Add multiple variants for different capacities or warranty periods.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+let variantCount = 1;
+function addVariant() {
+    const html = `
+    <div class="row variant-row mb-3 pb-3 border-bottom">
+        <div class="col-md-3">
+            <label class="form-label small">Capacity</label>
+            <input type="text" class="form-control" name="variant_capacity_${variantCount}" placeholder="e.g., 150Ah">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small">Warranty (months)</label>
+            <input type="number" class="form-control" name="variant_warranty_${variantCount}" placeholder="48">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small">Price (₹)</label>
+            <input type="number" class="form-control" name="variant_price_${variantCount}" placeholder="18000">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small">Stock</label>
+            <input type="number" class="form-control" name="variant_stock_${variantCount}" placeholder="10">
+        </div>
+    </div>`;
+    document.getElementById('variants-container').insertAdjacentHTML('beforeend', html);
+    variantCount++;
+    document.getElementById('variant_count').value = variantCount;
+}
+</script>
+{% endblock %}

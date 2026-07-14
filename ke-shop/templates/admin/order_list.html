@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Order #{{ order.order_number }}</h1>
+        <a href="/admin/orders" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Orders
+        </a>
+    </div>
+    
+    <div class="row">
+        <!-- Order Items -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Order Items</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Variant</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td><strong>{{ item.product_name }}</strong></td>
+                                <td>{{ item.variant_capacity }} | {{ (item.variant_warranty / 12)|round(1) }}Y</td>
+                                <td>₹{{ "{:,.0f}".format(item.price) }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>₹{{ "{:,.0f}".format(item.subtotal) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot class="table-light">
+                            <tr>
+                                <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                                <td><strong>₹{{ "{:,.0f}".format(order.subtotal) }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-end"><strong>Shipping:</strong></td>
+                                <td><strong>₹{{ "{:,.0f}".format(order.shipping_charge) }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                <td><h4 class="text-primary mb-0">₹{{ "{:,.0f}".format(order.total) }}</h4></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Order Info & Status Update -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Customer Info</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Name:</strong> {{ order.user.name }}</p>
+                    <p class="mb-2"><strong>Email:</strong> {{ order.user.email }}</p>
+                    <p class="mb-2"><strong>Phone:</strong> {{ order.user.phone or 'N/A' }}</p>
+                    <p class="mb-2"><strong>Order Date:</strong> {{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Update Status</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin/orders/{{ order.id }}/update-status">
+                        <div class="mb-3">
+                            <label class="form-label"><strong>Current Status:</strong></label>
+                            <select class="form-select" name="status">
+                                <option value="pending" {{ 'selected' if order.status == 'pending' }}>Pending</option>
+                                <option value="confirmed" {{ 'selected' if order.status == 'confirmed' }}>Confirmed</option>
+                                <option value="processing" {{ 'selected' if order.status == 'processing' }}>Processing</option>
+                                <option value="shipped" {{ 'selected' if order.status == 'shipped' }}>Shipped</option>
+                                <option value="delivered" {{ 'selected' if order.status == 'delivered' }}>Delivered</option>
+                                <option value="cancelled" {{ 'selected' if order.status == 'cancelled' }}>Cancelled</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-check-circle"></i> Update Status
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

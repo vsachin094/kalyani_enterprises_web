@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ url_for('static', filename=product.image) if product.image else 'https://via.placeholder.com/600x400/667eea/ffffff?text=' + product.name }}" 
+                 class="img-fluid rounded shadow" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-6">
+            <span class="badge bg-primary mb-2">{{ product.brand }}</span>
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <p class="lead">{{ product.short_description }}</p>
+            {% if product.full_description %}
+            <p class="text-muted">{{ product.full_description }}</p>
+            {% endif %}
+            
+            <hr>
+            
+            <h5 class="mb-3">Select Variant:</h5>
+            {% for variant in variants %}
+            <div class="border rounded p-3 mb-2 variant-item" style="cursor:pointer" 
+                 onclick="selectVariant({{ variant.id }}, '{{ variant.capacity }}', {{ variant.warranty_months }}, {{ variant.price }}, {{ variant.stock }})">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ variant.capacity }}</strong> | {{ variant.warranty_years }} Year Warranty
+                        <br><small class="text-muted">Stock: {{ variant.stock }}</small>
+                    </div>
+                    <h4 class="text-primary mb-0">₹{{ "{:,.0f}".format(variant.price) }}</h4>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="mt-4" id="add-to-cart-section" style="display:none;">
+                <div class="mb-3">
+                    <label class="form-label">Quantity:</label>
+                    <input type="number" id="quantity" class="form-control" value="1" min="1" max="10">
+                </div>
+                <button class="btn btn-primary btn-lg w-100" onclick="addToCart()">
+                    <i class="bi bi-cart-plus"></i> Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let selectedVariant = null;
+
+function selectVariant(id, capacity, warranty, price, stock) {
+    selectedVariant = {
+        variant_id: id,
+        product_id: {{ product.id }},
+        product_name: '{{ product.name }}',
+        capacity: capacity,
+        warranty_months: warranty,
+        price: price,
+        stock: stock
+    };
+    
+    document.querySelectorAll('.variant-item').forEach(el => {
+        el.style.backgroundColor = '';
+        el.style.borderColor = '#dee2e6';
+    });
+    event.currentTarget.style.backgroundColor = '#e7f3ff';
+    event.currentTarget.style.borderColor = '#667eea';
+    document.getElementById('add-to-cart-section').style.display = 'block';
+    document.getElementById('quantity').max = stock;
+}
+
+function addToCart() {
+    if (!selectedVariant) {
+        alert('Please select a variant');
+        return;
+    }
+    const quantity = parseInt(document.getElementById('quantity').value);
+    if (quantity > selectedVariant.stock) {
+        alert('Not enough stock');
+        return;
+    }
+    selectedVariant.quantity = quantity;
+    
+    fetch('/add-to-cart', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(selectedVariant)
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert('Added to cart!');
+            window.location.href = '/cart';
+        }
+    });
+}
+</script>
+{% endblock %}

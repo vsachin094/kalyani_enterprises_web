@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Checkout</h1>
+    
+    <form method="POST" action="/place-order">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for item in cart_items %}
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>{{ item.product_name }} ({{ item.capacity }}) × {{ item.quantity }}</span>
+                            <strong>₹{{ "{:,.0f}".format(item.price * item.quantity) }}</strong>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Payment Method</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" value="cod" id="cod" checked>
+                            <label class="form-check-label" for="cod">
+                                <i class="bi bi-cash"></i> Cash on Delivery
+                            </label>
+                        </div>
+                        <small class="text-muted">Pay when you receive your order</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card sticky-top" style="top:20px">
+                    <div class="card-body">
+                        <h5 class="mb-3">Payment Summary</h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal:</span>
+                            <strong>₹{{ "{:,.0f}".format(subtotal) }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Shipping:</span>
+                            <strong>₹{{ "{:,.0f}".format(shipping) }}</strong>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total:</strong>
+                            <h4 class="text-primary mb-0">₹{{ "{:,.0f}".format(total) }}</h4>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                            <i class="bi bi-check-circle"></i> Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1><i class="bi bi-box-seam"></i> Manage Products</h1>
+        <div>
+            <a href="/admin" class="btn btn-secondary me-2">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+            <a href="/admin/products/add" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Add New Product
+            </a>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Variants</th>
+                            <th>Price Range</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>
+                                <img src="{{ url_for('static', filename=product.image) if product.image else 'https://via.placeholder.com/50' }}" 
+                                     width="50" height="50" class="rounded">
+                            </td>
+                            <td><strong>{{ product.name }}</strong></td>
+                            <td>{{ product.brand }}</td>
+                            <td><span class="badge bg-info">{{ product.category }}</span></td>
+                            <td>{{ product.variants.count() }}</td>
+                            <td>{{ product.get_price_range() }}</td>
+                            <td><span class="badge bg-success">{{ product.status }}</span></td>
+                            <td>
+                                <a href="/product/{{ product.id }}" class="btn btn-sm btn-info" target="_blank">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                No products yet. <a href="/admin/products/add">Add your first product</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

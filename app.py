@@ -3,6 +3,8 @@ from datetime import datetime
 import os
 from PIL import Image
 
+from admin_panel import init_db, register_admin_routes, save_inquiry
+
 app = Flask(__name__)
 
 # Import the data loader
@@ -10,6 +12,10 @@ from data_loader import DataLoader
 
 # Initialize data loader
 loader = DataLoader()
+
+init_db(app)
+register_admin_routes(app)
+
 
 def get_image_aspect_ratio(image_path):
     """Get aspect ratio of an image"""
@@ -133,15 +139,8 @@ def submit_inquiry():
         message = data.get('message')
         product = data.get('product', 'General Inquiry')
         
-        # Log inquiry to file
-        with open('inquiries.txt', 'a', encoding='utf-8') as f:
-            f.write(f"\n{'='*50}\n")
-            f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write(f"Product/Service: {product}\n")
-            f.write(f"Name: {name}\n")
-            f.write(f"Email: {email}\n")
-            f.write(f"Phone: {phone}\n")
-            f.write(f"Message: {message}\n")
+        # Save inquiry to SQLite
+        save_inquiry(app, name, email, phone, message, product)
         
         return jsonify({
             'success': True, 

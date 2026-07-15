@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fb; color: #222; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); margin-bottom: 20px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+        .stat { background: #0f4c81; color: white; padding: 16px; border-radius: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border-bottom: 1px solid #e5e7eb; padding: 10px 8px; text-align: left; vertical-align: top; }
+        th { background: #f8fafc; }
+        .muted { color: #6b7280; font-size: 0.9rem; }
+        h1, h2 { margin-top: 0; }
+        .toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
+        .toolbar input, .toolbar select { padding: 8px 10px; border: 1px solid #d1d5db; border-radius: 8px; min-width: 180px; }
+        .table-wrap { max-height: 420px; overflow: auto; border: 1px solid #e5e7eb; border-radius: 10px; }
+        table { margin-top: 0; }
+        th { position: sticky; top: 0; background: #f8fafc; z-index: 1; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Admin Dashboard</h1>
+            <p class="muted">Protected area for collected inquiries and visitor activity.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="muted">Total Visits</div>
+                <h2>{{ stats.total_visits }}</h2>
+            </div>
+            <div class="stat">
+                <div class="muted">Unique Visitors</div>
+                <h2>{{ stats.unique_visitors }}</h2>
+            </div>
+            <div class="stat">
+                <div class="muted">Collected Inquiries</div>
+                <h2>{{ inquiries|length }}</h2>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Recent Inquiries</h2>
+            <div class="toolbar">
+                <input type="text" id="filterInput" placeholder="Search by name, email, product..." />
+                <select id="productFilter">
+                    <option value="">All products</option>
+                    {% set products = [] %}
+                    {% for item in inquiries %}
+                        {% if item.product and item.product not in products %}
+                            {% set _ = products.append(item.product) %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for product in products %}
+                    <option value="{{ product }}">{{ product }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% if inquiries %}
+            <div class="table-wrap">
+                <table id="inquiriesTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Product</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in inquiries %}
+                        <tr>
+                            <td>{{ item.created_at }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.email or '-' }}</td>
+                            <td>{{ item.phone or '-' }}</td>
+                            <td>{{ item.product or '-' }}</td>
+                            <td>{{ item.message or '-' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="muted">No inquiries submitted yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Recent Visits</h2>
+            {% if stats.recent_visits %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Path</th>
+                        <th>IP</th>
+                        <th>Visitor Hash</th>
+                        <th>Referrer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visit in stats.recent_visits %}
+                    <tr>
+                        <td>{{ visit.created_at }}</td>
+                        <td>{{ visit.path }}</td>
+                        <td>{{ visit.ip_address or '-' }}</td>
+                        <td>{{ visit.visitor_hash[:12] }}...</td>
+                        <td>{{ visit.referrer or '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="muted">No visits recorded yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        const filterInput = document.getElementById('filterInput');
+        const productFilter = document.getElementById('productFilter');
+        const table = document.getElementById('inquiriesTable');
+
+        if (table) {
+            const rows = Array.from(table.querySelectorAll('tbody tr'));
+
+            const applyFilters = () => {
+                const query = filterInput ? filterInput.value.toLowerCase() : '';
+                const selectedProduct = productFilter ? productFilter.value : '';
+
+                rows.forEach(row => {
+                    const cells = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+                    const matchesQuery = cells.some(cell => cell.includes(query));
+                    const productCell = cells[4] || '';
+                    const matchesProduct = !selectedProduct || productCell.includes(selectedProduct.toLowerCase());
+                    row.style.display = matchesQuery && matchesProduct ? '' : 'none';
+                });
+            };
+
+            filterInput?.addEventListener('input', applyFilters);
+            productFilter?.addEventListener('change', applyFilters);
+        }
+    </script>
+</body>
+</html>

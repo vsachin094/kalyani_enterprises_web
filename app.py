@@ -139,7 +139,7 @@ def submit_inquiry():
         message = data.get('message')
         product = data.get('product', 'General Inquiry')
         
-        # Save inquiry to SQLite
+        # Save inquiry to the configured database
         save_inquiry(app, name, email, phone, message, product)
         
         return jsonify({

@@ -3,3 +3,5 @@
 .qodo/
 inquiries.txt
 __pycache__/
+.env
+.env.*

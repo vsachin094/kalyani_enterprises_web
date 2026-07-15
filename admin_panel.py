@@ -7,8 +7,8 @@ from datetime import datetime
 from flask import jsonify, render_template, request
 
 
-ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'sachin')
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'ece@SK364')
+ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
 
 
 def get_db_path(app):

@@ -2,6 +2,12 @@ import os
 from datetime import timedelta
 from urllib.parse import quote
 
+try:
+    import psycopg  # noqa: F401
+    DRIVER_PREFIX = 'postgresql+psycopg://'
+except ImportError:  # pragma: no cover - runtime environment dependent
+    DRIVER_PREFIX = 'postgresql://'
+
 
 def build_database_url(env=None):
     env = env or os.environ
@@ -18,7 +24,7 @@ def build_database_url(env=None):
     if not db_name:
         return 'sqlite:///kalyani_shop.db'
 
-    return f"postgresql://{quote(db_user)}:{quote(db_password)}@{db_host}:{db_port}/{db_name}"
+    return f"{DRIVER_PREFIX}{quote(db_user)}:{quote(db_password)}@{db_host}:{db_port}/{db_name}"
 
 
 class Config:

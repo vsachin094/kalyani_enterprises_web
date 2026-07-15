@@ -7,6 +7,13 @@ from urllib.parse import quote
 
 from flask import jsonify, render_template, request
 
+try:
+    import psycopg
+    from psycopg.rows import dict_row
+except ImportError:  # pragma: no cover - handled at runtime
+    psycopg = None
+    dict_row = None
+
 
 ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'sachin')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'ece@SK364')
@@ -58,10 +65,13 @@ def is_postgres_database(app=None):
 def get_db_connection(app):
     database_url = get_database_url(app)
     if is_postgres_database(app):
+        normalized_url = database_url.replace('postgresql+psycopg://', 'postgresql://', 1)
+        if psycopg is not None:
+            return psycopg.connect(normalized_url)
+
         import psycopg2
 
-        conn = psycopg2.connect(database_url)
-        return conn
+        return psycopg2.connect(normalized_url)
 
     conn = sqlite3.connect(get_db_path(app))
     conn.row_factory = sqlite3.Row
@@ -70,6 +80,9 @@ def get_db_connection(app):
 
 def get_db_cursor(conn, app):
     if is_postgres_database(app):
+        if psycopg is not None and dict_row is not None:
+            return conn.cursor(row_factory=dict_row)
+
         from psycopg2.extras import RealDictCursor
 
         return conn.cursor(cursor_factory=RealDictCursor)

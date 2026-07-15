@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 import os
+import threading
+import time
+import urllib.request
 from PIL import Image
 
 from admin_panel import init_db, register_admin_routes, save_inquiry
@@ -10,11 +13,26 @@ app = Flask(__name__)
 # Import the data loader
 from data_loader import DataLoader
 
+
+def start_keep_alive():
+    def worker():
+        while True:
+            try:
+                urllib.request.urlopen('https://www.kalyanienterprises.com/', timeout=10)
+            except Exception:
+                pass
+            time.sleep(5 * 60)
+
+    thread = threading.Thread(target=worker, daemon=True, name='keep-alive-pinger')
+    thread.start()
+    return thread
+
 # Initialize data loader
 loader = DataLoader()
 
 init_db(app)
 register_admin_routes(app)
+start_keep_alive()
 
 
 def get_image_aspect_ratio(image_path):

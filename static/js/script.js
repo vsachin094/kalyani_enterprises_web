@@ -24,19 +24,19 @@ function updateNavbar() {
     const scrollTop = window.scrollY;
     const hero = document.querySelector('.hero-section');
     
-    if (!mainNav || !hero) return;
+    if (!mainNav) return;
 
-    const heroBottom = hero.offsetTop + hero.offsetHeight;
-    const scrollPercent = Math.min((scrollTop / heroBottom) * 100, 100);
+    const heroBottom = hero ? hero.offsetTop + hero.offsetHeight : 0;
+    const scrollPercent = heroBottom ? Math.min((scrollTop / heroBottom) * 100, 100) : 100;
     
     if (scrollTop > 50) {
         mainNav.classList.add('navbar-scrolled');
-        mainNav.style.background = `rgba(255, 255, 255, ${Math.min(scrollPercent / 100 * 0.9, 0.9)})`;
-        mainNav.style.backdropFilter = `blur(${Math.min(scrollPercent / 10, 10)}px)`;
+        mainNav.style.background = `rgba(255, 255, 255, ${hero ? Math.min(scrollPercent / 100 * 0.9, 0.9) : 0.98})`;
+        mainNav.style.backdropFilter = `blur(${hero ? Math.min(scrollPercent / 10, 10) : 15}px)`;
     } else {
         mainNav.classList.remove('navbar-scrolled');
-        mainNav.style.background = 'transparent';
-        mainNav.style.backdropFilter = 'blur(0px)';
+        mainNav.style.background = 'rgba(255, 255, 255, 0.95)';
+        mainNav.style.backdropFilter = 'blur(10px)';
     }
 }
 
@@ -59,6 +59,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const debouncedScroll = debounce(() => requestAnimationFrame(updateNavbar), 10);
     window.addEventListener('scroll', debouncedScroll, { passive: true });
     window.addEventListener('resize', debouncedScroll, { passive: true });
+});
+
+// Randomly choose a hero video or image on each homepage load.
+document.addEventListener('DOMContentLoaded', function() {
+    const hero = document.getElementById('home');
+    const heroVideo = document.getElementById('heroVideo');
+    if (!hero || !heroVideo) return;
+
+    const imageOptions = (hero.dataset.heroImages || '').split('|').filter(Boolean);
+    const useVideo = Math.random() < 0.5;
+
+    function useRandomImage() {
+        if (!imageOptions.length) return;
+        const image = imageOptions[Math.floor(Math.random() * imageOptions.length)];
+        hero.style.setProperty('--hero-image', `url("${image}")`);
+        hero.classList.remove('hero-video-active');
+    }
+
+    heroVideo.addEventListener('error', useRandomImage, { once: true });
+
+    if (useVideo) {
+        hero.classList.add('hero-video-active');
+        heroVideo.play().catch(useRandomImage);
+    } else {
+        useRandomImage();
+    }
 });
 
 // Add active class to nav links on scroll
@@ -239,9 +265,9 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-// Observe product cards
+// Observe product and service cards
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.product-card').forEach(card => {
+    document.querySelectorAll('.product-card, .service-card').forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'all 0.5s ease';
@@ -259,16 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
-
-// Navbar scroll class toggle
-window.addEventListener('scroll', function() {
-    const nav = document.querySelector('.navbar');
-    if (nav && window.scrollY > 40) {
-        nav.classList.add('scrolled');
-    } else if (nav) {
-        nav.classList.remove('scrolled');
-    }
 });
 
 // About Section - Scroll-Based Image Shuffle (Slow & Smooth)
@@ -349,4 +365,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-

@@ -2,7 +2,7 @@
   "name": "Maintenance & Support",
   "order": 2,
   "short_description": "Regular Maintenance & 24/7 Support",
-  "image": "services/maintenance.png",
+  "image": "services/maintaince_support.png",
   "features": [
     "Regular System Health Checks",
     "Preventive and Corrective Maintenance",

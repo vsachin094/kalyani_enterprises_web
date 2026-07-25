@@ -1,261 +1,167 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Product Detail Section -->
-<section class="product-detail-section py-5" style="margin-top: 80px;">
-    <div class="container">
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/#products">Products</a></li>
-                <li class="breadcrumb-item active">{{ product.name }}</li>
-            </ol>
-        </nav>
-        
-        <!-- Product Header -->
-        <div class="row mb-5">
-            <div class="col-lg-6">
-                <!-- Image Gallery -->
-                <div class="product-gallery">
-                    <div class="main-image mb-3">
-                        <img id="mainProductImage" 
-                             src="{{ url_for('static', filename=product.image) }}" 
-                             alt="{{ product.name }}" 
-                             class="img-fluid rounded shadow">
+<main class="product-detail-page">
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="product-detail-hero">
+                <div class="product-detail-visual">
+                    <div class="product-main-image-wrap">
+                        <img id="mainProductImage"
+                             src="{{ url_for('static', filename='images/' + product.image) }}"
+                             alt="{{ product.name }}"
+                             class="product-detail-image">
                     </div>
                     {% if product.gallery %}
-                    <div class="gallery-thumbnails">
-                        <div class="row g-2">
-                            <div class="col-3">
-                                <img src="{{ url_for('static', filename=product.image) }}" 
-                                     alt="{{ product.name }}" 
-                                     class="img-fluid rounded thumbnail-img active"
-                                     onclick="changeMainImage(this.src)">
-                            </div>
-                            {% for img in product.gallery[:3] %}
-                            <div class="col-3">
-                                <img src="{{ url_for('static', filename=img) }}" 
-                                     alt="Gallery {{ loop.index }}" 
-                                     class="img-fluid rounded thumbnail-img"
-                                     onclick="changeMainImage(this.src)">
-                            </div>
-                            {% endfor %}
-                        </div>
+                    <div class="product-gallery-thumbs" aria-label="Product images">
+                        <button type="button" class="product-thumb active" onclick="changeMainProductImage(this, '{{ url_for('static', filename='images/' + product.image) }}')">
+                            <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}">
+                        </button>
+                        {% for img in product.gallery[:3] %}
+                        <button type="button" class="product-thumb" onclick="changeMainProductImage(this, '{{ url_for('static', filename='images/' + img) }}')">
+                            <img src="{{ url_for('static', filename='images/' + img) }}" alt="{{ product.name }} image {{ loop.index }}"
+                                 onerror="this.closest('.product-thumb').remove();">
+                        </button>
+                        {% endfor %}
                     </div>
                     {% endif %}
                 </div>
-            </div>
-            
-            <div class="col-lg-6">
-                <div class="product-info">
-                    <h1 class="product-title mb-3">{{ product.name }}</h1>
-                    <p class="product-short-desc lead">{{ product.short_description }}</p>
-                    
-                    {% if product.price_range %}
-                    <div class="price-badge mb-3">
-                        <i class="bi bi-tag-fill"></i> {{ product.price_range }}
+
+                <div class="product-detail-intro">
+                    <span class="product-detail-eyebrow">Kalyani Enterprises Products</span>
+                    <h1>{{ product.name }}</h1>
+                    <p class="product-detail-lead">{{ product.short_description }}</p>
+                    <p class="product-detail-description">{{ product.full_description }}</p>
+
+                    <div class="product-meta-row">
+                        {% if product.price_range %}
+                        <div class="product-price-meta"><i class="bi bi-tag-fill"></i><span><strong>Price range</strong>{{ product.price_range }}</span></div>
+                        {% endif %}
+                        {% if product.availability %}
+                        <div class="product-stock-meta"><i class="bi bi-check-circle-fill"></i><span><strong>Availability</strong>{{ product.availability }}</span></div>
+                        {% endif %}
                     </div>
-                    {% endif %}
-                    
-                    {% if product.availability %}
-                    <div class="availability-badge mb-4">
-                        <i class="bi bi-check-circle-fill"></i> {{ product.availability }}
-                    </div>
-                    {% endif %}
-                    
-                    <div class="brands-section mb-4">
-                        <h6><strong>Available Brands:</strong></h6>
-                        <!-- <div class="brand-list">
+
+                    {% if product.brands %}
+                    <div class="product-brands-block">
+                        <span>Available brands</span>
+                        <div class="product-brand-tags">
                             {% for brand in product.brands %}
-                            <span class="brand-tag">{{ brand }}</span>
-                            {% endfor %}
-                        </div> -->
-                        <div class="brand-list">
-                            {% for brand in product.brands %}
-                            <img src="{{ url_for('static', filename='images/brands/' + brand|lower|replace(' ', '-') + '.png') }}" 
-                                alt="{{ brand }}" 
-                                style="height:40px; margin:5px;"
-                                onerror="this.style.display='none';">
+                            <span>{{ brand|replace('-', ' ')|title }}</span>
                             {% endfor %}
                         </div>
                     </div>
-                    
-                    <div class="cta-buttons">
-                        <a href="/#contact" class="btn btn-primary btn-lg mb-2">
-                            <i class="bi bi-telephone-fill"></i> Get Quote
+                    {% endif %}
+
+                    <div class="product-detail-actions">
+                        <a href="{{ url_for('index') }}#contact" class="btn-primary-about">
+                            <i class="bi bi-chat-square-text-fill"></i> Get a Quote
                         </a>
-                        {% if product.catalog_pdf %}
-                        <a href="{{ url_for('static', filename=product.catalog_pdf) }}" 
-                           class="btn btn-outline-secondary btn-lg mb-2" download>
-                            <i class="bi bi-download"></i> Download Catalog
-                        </a>
-                        {% endif %}
-                        <a href="https://wa.me/919876543210?text=I'm interested in {{ product.name }}" 
-                           class="btn btn-success btn-lg mb-2" target="_blank">
+                        <a href="https://wa.me/919162461804?text=I'm%20interested%20in%20{{ product.name|urlencode }}"
+                           class="btn-outline-about" target="_blank" rel="noopener">
                             <i class="bi bi-whatsapp"></i> WhatsApp Us
                         </a>
+                        {% if product.catalog_pdf %}
+                        <a href="{{ url_for('static', filename=product.catalog_pdf) }}" class="product-catalog-link" download>
+                            <i class="bi bi-download"></i> Catalog
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Detailed Content Tabs -->
-        <div class="product-details-tabs">
-            <ul class="nav nav-tabs mb-4" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#overview">Overview</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#specifications">Specifications</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#benefits">Benefits</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#applications">Applications</a>
-                </li>
-            </ul>
-            
-            <div class="tab-content">
-                <!-- Overview Tab -->
-                <div id="overview" class="tab-pane fade show active">
-                    <div class="content-section">
-                        <h3>Product Overview</h3>
-                        <p class="lead">{{ product.full_description }}</p>
-                        
-                        <h4 class="mt-4">Key Features</h4>
-                        <ul class="feature-list">
-                            {% for feature in product.features %}
-                            <li><i class="bi bi-check-circle-fill text-success"></i> {{ feature }}</li>
-                            {% endfor %}
-                        </ul>
+
+            <section class="product-info-panel">
+                <div class="product-overview-grid">
+                    <div>
+                        <span class="product-panel-eyebrow">Product overview</span>
+                        <h2>Built for dependable energy</h2>
+                        <p>{{ product.full_description }}</p>
                     </div>
-                </div>
-                
-                <!-- Specifications Tab -->
-                <div id="specifications" class="tab-pane fade">
-                    <div class="content-section">
-                        <h3>Technical Specifications</h3>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    {% for key, value in product.specifications.items() %}
-                                    <tr>
-                                        <th style="width: 40%;">{{ key }}</th>
-                                        <td>{{ value }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+                    {% if product.features %}
+                    <div class="product-feature-list">
+                        {% for feature in product.features %}
+                        <div><i class="bi bi-check-circle-fill"></i><span>{{ feature }}</span></div>
+                        {% endfor %}
                     </div>
+                    {% endif %}
                 </div>
-                
-                <!-- Benefits Tab -->
-                <div id="benefits" class="tab-pane fade">
-                    <div class="content-section">
-                        <h3>Benefits & Advantages</h3>
-                        <div class="row">
-                            {% for benefit in product.benefits %}
-                            <div class="col-md-6 mb-3">
-                                <div class="benefit-card p-3 border rounded">
-                                    <i class="bi bi-star-fill text-warning me-2"></i>
-                                    <strong>{{ benefit }}</strong>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
+            </section>
+
+            {% if product.specifications %}
+            <section class="product-info-panel">
+                <span class="product-panel-eyebrow">Technical information</span>
+                <h2>Specifications</h2>
+                <div class="product-spec-grid">
+                    {% for key, value in product.specifications.items() %}
+                    <div><span>{{ key }}</span><strong>{{ value }}</strong></div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if product.benefits or product.applications %}
+            <div class="product-detail-columns">
+                {% if product.benefits %}
+                <section class="product-info-panel">
+                    <span class="product-panel-eyebrow">Why it matters</span>
+                    <h2>Key benefits</h2>
+                    <ul class="product-benefit-list">
+                        {% for benefit in product.benefits %}
+                        <li><i class="bi bi-star-fill"></i>{{ benefit }}</li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% endif %}
+                {% if product.applications %}
+                <section class="product-info-panel">
+                    <span class="product-panel-eyebrow">Designed for</span>
+                    <h2>Applications</h2>
+                    <div class="product-application-grid">
+                        {% for application in product.applications %}
+                        <div><i class="bi bi-lightning-charge-fill"></i>{{ application }}</div>
+                        {% endfor %}
                     </div>
-                </div>
-                
-                <!-- Applications Tab -->
-                <div id="applications" class="tab-pane fade">
-                    <div class="content-section">
-                        <h3>Applications & Use Cases</h3>
-                        <div class="row">
-                            {% for app in product.applications %}
-                            <div class="col-md-4 mb-3">
-                                <div class="application-card p-3 border rounded text-center">
-                                    <i class="bi bi-lightning-charge-fill text-primary" style="font-size: 2rem;"></i>
-                                    <h5 class="mt-2">{{ app }}</h5>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+                </section>
+                {% endif %}
             </div>
-        </div>
-        
-        <!-- Related Products -->
-        {% if related_products %}
-        <div class="related-products mt-5">
-            <h3 class="text-center mb-4">Related Products</h3>
-            <div class="row g-4">
-                {% for related in related_products[:3] %}
-                <div class="col-md-4">
-                    <div class="card h-100">
-                        <img src="{{ url_for('static', filename=related.image) }}" 
-                             class="card-img-top" alt="{{ related.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ related.name }}</h5>
-                            <p class="card-text">{{ related.short_description }}</p>
-                            <a href="/product/{{ related.id }}" class="btn btn-primary">View Details</a>
-                        </div>
+            {% endif %}
+
+            {% if related_products %}
+            <section class="related-products-modern">
+                <div class="related-heading">
+                    <div>
+                        <span class="product-panel-eyebrow">Explore more</span>
+                        <h2>Related products</h2>
                     </div>
+                    <a href="{{ url_for('index') }}#products">View all products <i class="bi bi-arrow-right"></i></a>
                 </div>
-                {% endfor %}
-            </div>
+                <div class="related-products-grid">
+                    {% for related in related_products[:3] %}
+                    <a class="related-product-card" href="{{ url_for('product_detail', product_id=related.id) }}">
+                        <div class="related-product-image">
+                            <img src="{{ url_for('static', filename='images/' + related.image) }}" alt="{{ related.name }}">
+                        </div>
+                        <div>
+                            <h3>{{ related.name }}</h3>
+                            <p>{{ related.short_description }}</p>
+                            <span>View details <i class="bi bi-arrow-up-right"></i></span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
-</section>
+    </section>
+</main>
 
 <script>
-function changeMainImage(src) {
-    document.getElementById('mainProductImage').src = src;
-    // Update active thumbnail
-    document.querySelectorAll('.thumbnail-img').forEach(img => {
-        img.classList.remove('active');
-        if (img.src === src) {
-            img.classList.add('active');
-        }
+function changeMainProductImage(button, source) {
+    document.getElementById('mainProductImage').src = source;
+    document.querySelectorAll('.product-thumb').forEach(function (thumb) {
+        thumb.classList.remove('active');
     });
+    button.classList.add('active');
 }
-
 </script>
-
-<style>
-/* Global scroll padding for fixed navbar */
-html {
-    scroll-padding-top: 100px;
-}
-
-/* Product detail tabs */
-.product-details-tabs {
-    margin-top: 3rem;
-    scroll-margin-top: 120px;
-}
-
-.product-details-tabs .nav-tabs {
-    background: white;
-    padding: 1rem 0;
-    margin-bottom: 2rem;
-    border-bottom: 2px solid #e9ecef;
-}
-
-.product-details-tabs .tab-content {
-    background: white;
-    min-height: 400px;
-}
-
-.tab-pane {
-    scroll-margin-top: 120px;
-}
-
-.content-section {
-    padding: 2rem 0;
-}
-</style>
 {% endblock %}

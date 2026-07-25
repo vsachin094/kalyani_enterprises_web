@@ -1,24 +1,23 @@
 {
   "name": "Solar Panels",
   "order": 1,
-  "short_description": "540W - 550W High-Efficiency Solar Modules",
+  "short_description": "Solar Modules from 40W to 635W",
   "image": "products/livgaurd_solar.png",
   "features": [
-    "Mono PERC & Halfcut Technology",
-    "540W - 550W High-Efficiency Modules",
-    "25-Year Performance Warranty",
-    "Available from Leading Brands: Livguard Solar, Eastman Solar, Indpower"
+    "40W - 635W module range, depending on model",
+    "Mono PERC, TOPCon and bifacial options",
+    "Up to 25%+ module efficiency on selected models",
+    "DCR and non-DCR options available by model"
   ],
   "full_description": "Our premium solar panels utilize the latest Mono PERC and Halfcut technology to deliver maximum efficiency and reliability. Perfect for residential, commercial, and industrial applications across Jharkhand.",
   "specifications": {
-    "Power Output": "540W - 550W",
-    "Technology": "Mono PERC & Halfcut",
-    "Efficiency": "Up to 21.5%",
-    "Warranty": "25 Years Performance, 12 Years Product",
-    "Dimensions": "2278 x 1134 x 35 mm",
-    "Weight": "28.5 kg",
-    "Cell Type": "182mm Mono-crystalline",
-    "Frame": "Anodized Aluminum Alloy"
+    "Power Output": "40W - 635W, model dependent",
+    "Technology": "Mono PERC / TOPCon / bifacial",
+    "Efficiency": "Up to 25%+ on selected models",
+    "Warranty": "Product and performance warranty vary by model, up to 25-30 years",
+    "Panel Type": "DCR and non-DCR options",
+    "Cell Type": "Monocrystalline options",
+    "Frame": "Anodized aluminum alloy, model dependent"
   },
   "benefits": [
     "Higher energy output per square meter",
@@ -45,7 +44,7 @@
     "products/solar_panel_3.jpg"
   ],
   "catalog_pdf": "catalogs/solar-panels-catalog.pdf",
-  "price_range": "₹20,000 - ₹25,000",
+  "price_range": "Indicative quote: ₹3,000 - ₹30,000 per module; confirm model price",
   "availability": "In Stock",
   "related_products": [
     "solar-inverters",

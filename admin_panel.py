@@ -39,14 +39,6 @@ def build_database_url(env=None):
     return f"postgresql://{db_host}:{db_port}/{db_name}"
 
 
-def get_db_path(app):
-    configured_path = app.config.get('DATABASE_PATH')
-    if configured_path:
-        return configured_path
-    os.makedirs(app.instance_path, exist_ok=True)
-    return os.path.join(app.instance_path, 'site_admin.db')
-
-
 def get_database_url(app=None):
     app_obj = app or globals().get('_APP')
     configured_url = None
@@ -73,7 +65,8 @@ def get_db_connection(app):
 
         return psycopg2.connect(normalized_url)
 
-    conn = sqlite3.connect(get_db_path(app))
+    os.makedirs(app.instance_path, exist_ok=True)
+    conn = sqlite3.connect(os.path.join(app.instance_path, 'site_admin.db'))
     conn.row_factory = sqlite3.Row
     return conn
 

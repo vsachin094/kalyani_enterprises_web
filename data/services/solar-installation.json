@@ -2,7 +2,7 @@
   "name": "Solar Installation",
   "order": 1,
   "short_description": "Professional Solar System Installation",
-  "image": "services/installation.jpg",
+  "image": "services/installation.png",
   "features": [
     "Complete Solar System Setup",
     "Professional On-Site Installation",

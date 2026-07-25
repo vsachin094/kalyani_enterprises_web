@@ -2,7 +2,12 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section id="home" class="hero-section">
+<section id="home" class="hero-section"
+         data-hero-video="{{ url_for('static', filename='images/main_page.mp4') }}"
+         data-hero-images="{{ url_for('static', filename='images/main_page.png') }}|{{ url_for('static', filename='images/main_page2.png') }}">
+    <video class="hero-video-bg" id="heroVideo" muted loop playsinline preload="metadata" aria-hidden="true">
+        <source src="{{ url_for('static', filename='images/main_page.mp4') }}" type="video/mp4">
+    </video>
     <div class="container text-center">
         <img src="{{ url_for('static', filename='images/KE_Logo.png') }}" alt="Kalyani Enterprises Logo" class="hero-logo">
         <h1 class="company-name">KALYANI ENTERPRISES</h1>
@@ -22,7 +27,6 @@
                 {% endif %}
             </div>
         </div>
-
 
         <div class="cta-buttons">
             <a href="tel:+919162461804" class="btn btn-call">
@@ -408,7 +412,8 @@
                             {% if testimonial.photo %}
                             <img src="{{ url_for('static', filename=testimonial.photo) }}" 
                                  alt="{{ testimonial.name }}" 
-                                 class="testimonial-photo">
+                                 class="testimonial-photo"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\"bi bi-person-circle\"></i>'">
                             {% else %}
                             <i class="bi bi-person-circle"></i>
                             {% endif %}
@@ -464,61 +469,12 @@
         
         <!-- Two Column Layout -->
         <div class="row align-items-center g-4">
-            <!-- LEFT: Animated Image Collage -->
+            <!-- LEFT: About Image -->
             <div class="col-lg-6">
-                <div class="about-collage">
-                    {% if about_images.all|length > 0 %}
-                    <!-- Main Large Image -->
-                    <div class="collage-main">
-                        <img src="{{ url_for('static', filename=about_images.all[0]) }}" 
-                             alt="Solar Products" 
-                             class="collage-img main-img"
-                             onerror="this.src='https://via.placeholder.com/400x500/667eea/ffffff?text=Solar+Products'">
-                    </div>
-                    
-                    <!-- Grid of Smaller Images (4 images) -->
-                    <div class="collage-grid">
-                        {% for i in range(1, 5) %}
-                        {% if i < about_images.all|length %}
-                        <div class="collage-item item-{{ i }}">
-                            <img src="{{ url_for('static', filename=about_images.all[i]) }}" 
-                                 alt="Product {{ i }}"
-                                 onerror="this.src='https://via.placeholder.com/200x200/764ba2/ffffff?text=Product'">
-                        </div>
-                        {% else %}
-                        <div class="collage-item item-{{ i }}">
-                            <img src="https://via.placeholder.com/200x200/667eea/ffffff?text=Product+{{ i }}" 
-                                 alt="Product {{ i }}">
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <!-- Fallback if no images -->
-                    <div class="about-placeholder">
-                        <div class="placeholder-content">
-                            <i class="bi bi-sun" style="font-size: 3rem; color: var(--brand-1);"></i>
-                            <i class="bi bi-battery-charging" style="font-size: 3rem; color: var(--brand-2);"></i>
-                            <i class="bi bi-lightning-charge" style="font-size: 3rem; color: var(--brand-1);"></i>
-                        </div>
-                    </div>
-                    {% endif %}
-                    
-                    <!-- Floating Brand Badges -->
-                    <div class="brand-badges-float">
-                        <div class="brand-badge-float">
-                            <i class="bi bi-award-fill"></i>
-                            <span>Authorized Dealer</span>
-                        </div>
-                        <div class="brand-badge-float">
-                            <i class="bi bi-shield-check"></i>
-                            <span>Quality Assured</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Decorative Elements -->
-                    <div class="collage-decoration decoration-1"></div>
-                    <div class="collage-decoration decoration-2"></div>
+                <div class="about-img-wrapper">
+                    <img src="{{ url_for('static', filename='images/about_us.png') }}"
+                         alt="Kalyani Enterprises solar energy solutions"
+                         class="about-img">
                 </div>
             </div>
             
@@ -603,7 +559,7 @@
                             <input type="tel" class="form-control" id="phone" placeholder="Your Phone Number *" required>
                         </div>
                         <div class="mb-3">
-                            <textarea class="form-control" id="message" rows="4" placeholder="Your Message"></textarea>
+                            <textarea class="form-control" id="message" rows="6" placeholder="Your Message"></textarea>
                         </div>
                         <button type="submit" class="btn btn-submit w-100">
                             <i class="bi bi-send-fill"></i> Submit Inquiry

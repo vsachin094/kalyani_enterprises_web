@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 import os
+import smtplib
 import threading
 import time
 import urllib.request
-from PIL import Image
+from email.message import EmailMessage
 
 from admin_panel import init_db, register_admin_routes, save_inquiry
 
@@ -30,46 +31,59 @@ def start_keep_alive():
 # Initialize data loader
 loader = DataLoader()
 
+
+def get_email_config(env=None):
+    env = env or os.environ
+    username = env.get('SMTP_USERNAME', 'keindia@outlook.in').strip()
+    password = env.get('SMTP_PASSWORD', '').strip()
+    to_email = env.get('SMTP_TO_EMAIL', 'kdevi9162@gmail.com').strip()
+
+    enabled = bool(username and password and to_email)
+    if env.get('EMAIL_NOTIFICATIONS_ENABLED') is not None:
+        enabled = env.get('EMAIL_NOTIFICATIONS_ENABLED').lower() in {'1', 'true', 'yes', 'on'}
+
+    return {
+        'enabled': enabled,
+        'smtp_host': env.get('SMTP_HOST', 'smtp-mail.outlook.com'),
+        'smtp_port': int(env.get('SMTP_PORT', '587')),
+        'username': username,
+        'password': password,
+        'to_email': to_email,
+        'from_email': env.get('SMTP_FROM_EMAIL', username or 'noreply@example.com'),
+    }
+
+
+def send_inquiry_notification(name, email, phone, message, product, env=None):
+    config = get_email_config(env)
+    if not config['enabled']:
+        return False
+
+    msg = EmailMessage()
+    msg['Subject'] = f'New inquiry from {name or "Website Visitor"}'
+    msg['From'] = config['from_email']
+    msg['To'] = config['to_email']
+    msg.set_content(
+        f"Name: {name or 'N/A'}\n"
+        f"Email: {email or 'N/A'}\n"
+        f"Phone: {phone or 'N/A'}\n"
+        f"Product: {product or 'General Inquiry'}\n\n"
+        f"Message:\n{message or 'No message provided'}"
+    )
+
+    try:
+        with smtplib.SMTP(config['smtp_host'], config['smtp_port']) as server:
+            server.starttls()
+            server.login(config['username'], config['password'])
+            server.send_message(msg)
+        return True
+    except Exception:
+        return False
+
+
 init_db(app)
 register_admin_routes(app)
 start_keep_alive()
 
-
-def get_image_aspect_ratio(image_path):
-    """Get aspect ratio of an image"""
-    try:
-        with Image.open(image_path) as img:
-            width, height = img.size
-            return width / height
-    except:
-        return 1.0
-
-def categorize_images_by_orientation(folder_path):
-    """Categorize images by orientation"""
-    landscape = []
-    portrait = []
-    square = []
-    
-    if os.path.isdir(folder_path):
-        for f in sorted(os.listdir(folder_path)):
-            if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif')):
-                full_path = os.path.join(folder_path, f)
-                ratio = get_image_aspect_ratio(full_path)
-                relative_path = f'images/about/{f}'
-                
-                if ratio > 1.2:
-                    landscape.append(relative_path)
-                elif ratio < 0.8:
-                    portrait.append(relative_path)
-                else:
-                    square.append(relative_path)
-    
-    return {
-        'landscape': landscape,
-        'portrait': portrait,
-        'square': square,
-        'all': landscape + portrait + square
-    }
 
 @app.route('/')
 def index():
@@ -91,17 +105,12 @@ def index():
             if f.lower().endswith(('.png', '.jpg', '.jpeg', '.webp', '.gif', '.svg')):
                 brand_logos.append('images/brands/' + f)
     
-    # Dynamically find about images and categorize
-    about_folder = os.path.join(app.static_folder, 'images', 'about')
-    about_images = categorize_images_by_orientation(about_folder)
-    
     return render_template(
         'index.html', 
         brand_logos=brand_logos, 
         testimonials=testimonials, 
         products=products_and_services,
-        portfolio_projects=portfolio_projects,
-        about_images=about_images
+        portfolio_projects=portfolio_projects
     )
 
 @app.route('/product/<product_id>')
@@ -159,6 +168,8 @@ def submit_inquiry():
         
         # Save inquiry to the configured database
         save_inquiry(app, name, email, phone, message, product)
+        # Email notifications are temporarily disabled on the main site.
+        # send_inquiry_notification(name, email, phone, message, product)
         
         return jsonify({
             'success': True, 

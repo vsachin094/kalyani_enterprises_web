@@ -1,0 +1,51 @@
+{
+  "name": "Solar Batteries",
+  "order": 2,
+  "short_description": "Tubular and lithium storage from 40Ah to 280Ah",
+  "image": "products/livgaurd_bat.png",
+  "features": [
+    "40Ah - 280Ah capacity range, model and chemistry dependent",
+    "Tubular, solar tubular and LiFePO4 lithium options",
+    "12V, 24V and 48V-class system configurations",
+    "Up to 80% usable depth of discharge on selected lithium models"
+  ],
+  "full_description": "High-quality deep cycle batteries designed specifically for solar energy storage. Built to withstand frequent charge-discharge cycles with minimal maintenance requirements.",
+  "specifications": {
+    "Capacity Range": "40Ah - 280Ah, model dependent",
+    "Chemistry": "Tubular / solar tubular / LiFePO4 lithium",
+    "System Voltage": "12V, 24V and 48V-class systems",
+    "Depth of Discharge": "Up to 80% on selected lithium models",
+    "Warranty": "Typically 3-10 years, model and brand dependent",
+    "Cycle Life": "Varies by chemistry and operating conditions"
+  },
+  "benefits": [
+    "Long backup duration",
+    "Low maintenance requirements",
+    "Resistant to power fluctuations",
+    "Excellent charge acceptance",
+    "Suitable for deep discharge applications"
+  ],
+  "applications": [
+    "Solar home systems",
+    "Off-grid installations",
+    "Backup power systems",
+    "Inverter applications",
+    "Hybrid solar systems"
+  ],
+  "brands": [
+    "Livguard Energy",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/battery_1.jpg",
+    "products/battery_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/solar-batteries-catalog.pdf",
+  "price_range": "Indicative quote: ₹8,000 - ₹75,000 per battery; confirm model",
+  "availability": "In Stock",
+  "related_products": [
+    "power-inverters",
+    "solar-panels"
+  ]
+}

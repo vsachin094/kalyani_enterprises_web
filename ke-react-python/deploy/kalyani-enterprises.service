@@ -1,0 +1,23 @@
+[Unit]
+Description=Kalyani Enterprises - Python Backend Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/kalyani-enterprises/backend
+EnvironmentFile=-/opt/kalyani-enterprises/.env
+ExecStart=/opt/kalyani-enterprises/backend/.venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --proxy-headers
+Restart=always
+RestartSec=5
+User=kalyani
+Group=kalyani
+UMask=027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/kalyani-enterprises/backend/data
+
+[Install]
+WantedBy=multi-user.target

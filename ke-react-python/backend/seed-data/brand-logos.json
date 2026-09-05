@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Livguard Solar",
+    "image": "/images/brands/livgaurd-solar.png",
+    "alt": "Livguard Solar",
+    "relationship": "direct"
+  },
+  {
+    "name": "Livguard",
+    "image": "/images/brands/livguard.png",
+    "alt": "Livguard",
+    "relationship": "direct"
+  },
+  {
+    "name": "Eastman Solar",
+    "image": "/images/brands/eastman-solar.png",
+    "alt": "Eastman Solar",
+    "relationship": "channel"
+  },
+  {
+    "name": "Indpower",
+    "image": "/images/brands/indpower.png",
+    "alt": "Indpower",
+    "relationship": "channel"
+  },
+  {
+    "name": "Livfast",
+    "image": "/images/brands/livfast.svg",
+    "alt": "Livfast",
+    "relationship": "channel"
+  },
+  {
+    "name": "Orient Electric",
+    "image": "/images/brands/orient-electric.png",
+    "alt": "Orient Electric",
+    "relationship": "channel"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "name": "EV Battery Solutions",
+  "order": 6,
+  "short_description": "Battery solutions for electric two-wheelers and autos",
+  "image": "products/livguard-ev-battery.webp",
+  "features": [
+    "Lithium battery options for electric bikes, scooters, autos and e-rickshaws",
+    "Battery Management System (BMS) and safety protection options",
+    "Capacity and voltage matched to the vehicle and drivetrain",
+    "Support for replacement, fleet and custom EV requirements"
+  ],
+  "full_description": "Electric vehicle battery solutions for two-wheelers and three-wheelers, selected according to vehicle compatibility, battery chemistry, voltage, capacity, charging requirements and usage pattern.",
+  "specifications": {
+    "Vehicle Types": "Electric bikes, scooters, autos and e-rickshaws",
+    "Battery Chemistry": "Lithium-ion / LFP options, model dependent",
+    "Capacity": "Model and vehicle dependent",
+    "Safety": "BMS, thermal and protection features on selected models",
+    "Warranty": "Brand and model terms apply"
+  },
+  "benefits": [
+    "Vehicle-matched battery selection",
+    "Longer operating range on compatible systems",
+    "Charging and safety guidance",
+    "Options for individual and fleet requirements"
+  ],
+  "applications": [
+    "Electric bikes and scooters",
+    "Electric autos and e-rickshaws",
+    "Delivery and commercial fleets",
+    "EV battery replacement and upgrades"
+  ],
+  "brands": ["Livguard Energy"],
+  "availability": "On Request",
+  "related_products": ["energy-storage", "solar-batteries"]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Energy Storage Systems",
+  "order": 5,
+  "short_description": "Scalable battery storage from 2.5kWh to 50kWh+",
+  "image": "products/livguard-energy-storage.jpg",
+  "features": [
+    "2.5kWh - 50kWh+ storage configurations, expandable by system",
+    "LiFePO4 lithium and tubular battery options",
+    "Smart BMS and hybrid inverter compatibility on selected models",
+    "Suitable for homes, shops, petrol pumps and commercial sites"
+  ],
+  "full_description": "Comprehensive energy storage systems combining batteries, inverters, and intelligent management systems for reliable backup power and energy independence.",
+  "specifications": {
+    "Storage Capacity": "2.5kWh - 50kWh+ scalable systems",
+    "Battery Chemistry": "LiFePO4 lithium / tubular options",
+    "System Voltage": "25.6V - 51.2V battery modules, model dependent",
+    "Usable Capacity": "Up to 80% DoD on selected lithium systems",
+    "Warranty": "Typically 5-10 years, model and brand dependent",
+    "Management": "Smart BMS and monitoring options"
+  },
+  "benefits": [
+    "Complete backup solution",
+    "Scalable capacity",
+    "Intelligent power management",
+    "Long service life",
+    "Reduced electricity bills"
+  ],
+  "applications": [
+    "Home energy storage",
+    "Petrol pump backup",
+    "Commercial establishments",
+    "Industrial facilities",
+    "Telecom towers"
+  ],
+  "brands": [
+    "Livguard",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/storage_1.jpg",
+    "products/storage_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/energy-storage-catalog.pdf",
+  "price_range": "Indicative quote: ₹75,000 - ₹10,00,000+; confirm capacity and installation",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-inverters",
+    "solar-batteries"
+  ]
+}

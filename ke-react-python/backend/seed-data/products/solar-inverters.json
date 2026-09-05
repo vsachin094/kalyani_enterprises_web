@@ -1,0 +1,51 @@
+{
+  "name": "Solar Inverters",
+  "order": 4,
+  "short_description": "Off-grid, on-grid and hybrid solar inverters from 500VA to 30KVA",
+  "image": "products/livguard-solar-inverter.webp",
+  "features": [
+    "500VA - 30KVA range across residential and commercial models",
+    "On-grid, off-grid and hybrid configurations",
+    "MPPT, monitoring and parallel expansion options by model",
+    "Indoor IP20 to outdoor IP65-rated options"
+  ],
+  "full_description": "State-of-the-art solar inverters with Maximum Power Point Tracking (MPPT) technology for optimal energy harvest from solar panels. Suitable for both grid-tied and off-grid applications.",
+  "specifications": {
+    "Capacity Range": "500VA - 30KVA, model and phase dependent",
+    "Inverter Types": "Hybrid / on-grid / off-grid",
+    "Solar Input": "MPPT or PWM, model dependent",
+    "Monitoring": "LCD, app and web monitoring options",
+    "Protection": "IP20 - IP65, model dependent",
+    "Warranty": "Up to 10 years on selected models"
+  },
+  "benefits": [
+    "Maximum power extraction from panels",
+    "Works with or without grid",
+    "Remote monitoring capability",
+    "Battery charging optimization",
+    "Weather-resistant design"
+  ],
+  "applications": [
+    "Residential solar systems",
+    "Commercial installations",
+    "Industrial applications",
+    "Agricultural pumping",
+    "Hybrid power systems"
+  ],
+  "brands": [
+    "Livguard",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/solar_inv_1.jpg",
+    "products/solar_inv_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/solar-inverters-catalog.pdf",
+  "price_range": "Indicative quote: ₹25,000 - ₹6,00,000+; confirm system size",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-panels",
+    "solar-batteries"
+  ]
+}

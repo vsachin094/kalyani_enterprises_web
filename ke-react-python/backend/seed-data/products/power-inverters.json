@@ -1,0 +1,52 @@
+{
+  "name": "Power Inverters",
+  "order": 3,
+  "short_description": "Home and office backup inverters from 500VA to 5KVA",
+  "image": "products/livguard-power-inverter.png",
+  "features": [
+    "500VA - 5KVA range, model dependent",
+    "Pure sine wave options for homes, offices and shops",
+    "12V, 24V and 48V battery configurations by model",
+    "Overload, short-circuit and battery protection options"
+  ],
+  "full_description": "Advanced pure sine wave inverters providing stable and reliable power backup for homes and offices. Features intelligent battery management and comprehensive protection systems.",
+  "specifications": {
+    "Capacity Range": "500VA - 5KVA, model dependent",
+    "Input Voltage": "230V AC",
+    "Output": "Pure Sine Wave",
+    "Efficiency": "Up to 90%",
+    "Battery Compatibility": "12V / 24V / 48V, model dependent",
+    "Waveform": "Pure sine wave options",
+    "Warranty": "Typically 2-5 years, model and brand dependent"
+  },
+  "benefits": [
+    "Pure sine wave for sensitive electronics",
+    "Intelligent battery charging",
+    "Overload and short circuit protection",
+    "Low maintenance operation",
+    "Silent operation"
+  ],
+  "applications": [
+    "Home power backup",
+    "Office equipment",
+    "Medical devices",
+    "Computer systems",
+    "Telecommunication equipment"
+  ],
+  "brands": [
+    "Livguard",
+    "Eastman",
+    "Indpower"
+  ],
+  "gallery": [
+    "products/inverter_1.jpg",
+    "products/inverter_2.jpg"
+  ],
+  "catalog_pdf": "catalogs/power-inverters-catalog.pdf",
+  "price_range": "Indicative quote: ₹5,000 - ₹75,000; confirm capacity and model",
+  "availability": "In Stock",
+  "related_products": [
+    "solar-batteries",
+    "solar-inverters"
+  ]
+}

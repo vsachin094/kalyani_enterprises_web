@@ -1,0 +1,15 @@
+{
+  "app": {"environment": "development", "cors_origins": ["http://localhost:3000"], "allowed_hosts": ["localhost", "127.0.0.1"]},
+  "database": {
+    "url": "",
+    "driver": "sqlite",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "name": "kalyani_enterprises",
+    "user": "kalyani",
+    "fallback_to_sqlite": true,
+    "data_dir": "data"
+  },
+  "security": {"secret_key": "", "access_token_expire_minutes": 480},
+  "admin": {"username": "admin", "password": ""}
+}

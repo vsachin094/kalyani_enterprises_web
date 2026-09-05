@@ -1,0 +1,54 @@
+{
+  "name": "Maintenance & Support",
+  "order": 2,
+  "short_description": "Regular Maintenance & Service Support",
+  "image": "services/maintaince_support.png",
+  "features": [
+    "Regular System Health Checks",
+    "Preventive and Corrective Maintenance",
+    "Performance Optimization",
+    "Responsive Service Assistance"
+  ],
+  "full_description": "Comprehensive maintenance and support services to help your power and energy systems operate reliably throughout their service life.",
+  "services_included": [
+    "Quarterly system inspection",
+    "Panel cleaning and maintenance",
+    "Performance monitoring",
+    "Inverter servicing",
+    "Battery health check",
+    "Connection tightening",
+    "Remote troubleshooting"
+  ],
+  "plans": [
+    {
+      "name": "Basic",
+      "features": [
+        "Annual inspection",
+        "Emergency support"
+      ],
+      "price": "₹3,000/year"
+    },
+    {
+      "name": "Standard",
+      "features": [
+        "Quarterly inspection",
+        "Priority support",
+        "Cleaning included as per the service plan"
+      ],
+      "price": "₹8,000/year"
+    },
+    {
+      "name": "Premium",
+      "features": [
+        "Monthly inspection",
+        "Support according to the agreed service plan",
+        "Parts replacement as applicable"
+      ],
+      "price": "₹15,000/year"
+    }
+  ],
+  "gallery": [
+    "services/maint_1.jpg",
+    "services/maint_2.jpg"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Home Power Packages",
+  "order": 7,
+  "short_description": "Complete inverter, battery and solar packages for homes",
+  "image": "products/livguard-home-power-package.jpg",
+  "features": [
+    "Home inverter, battery backup and solar options",
+    "Load assessment and requirement-based system sizing",
+    "Hybrid, backup and energy-storage configurations",
+    "Supply, installation, commissioning and support coordination"
+  ],
+  "full_description": "Complete home energy solutions designed around household load, backup expectations, available space and future requirements. The right combination may include an inverter, battery, solar system, energy storage or electrical upgrades.",
+  "specifications": {
+    "Solution Type": "Home backup / solar / hybrid / energy storage",
+    "System Size": "Selected according to household load and backup needs",
+    "Battery Options": "Tubular, lithium and model-dependent options",
+    "Solar Options": "On-grid, off-grid and hybrid configurations",
+    "Warranty": "Brand, product and installation terms apply"
+  },
+  "benefits": [
+    "One coordinated solution for home power needs",
+    "Better system sizing before purchase",
+    "Expandable options for changing requirements",
+    "Support from consultation through service"
+  ],
+  "applications": [
+    "Homes and apartments",
+    "Independent houses",
+    "Home offices and shops",
+    "Small residential communities"
+  ],
+  "brands": ["Livguard", "Livguard Solar"],
+  "availability": "On Request",
+  "related_products": ["power-inverters", "solar-batteries", "energy-storage", "ev-batteries"]
+}

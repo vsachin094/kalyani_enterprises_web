@@ -1,6 +1,6 @@
 # Render Blueprint for the self-contained Kalyani Enterprises deployment.
-# In the current monorepo, select this file as the Blueprint Path:
-# ke-react-python/render.yaml
+# This file is at the repository root and is the Blueprint Path:
+# render.yaml
 
 services:
   - type: web
@@ -8,7 +8,6 @@ services:
     runtime: docker
     plan: free
     region: singapore
-    rootDir: ke-react-python
     dockerfilePath: Dockerfile
     dockerContext: .
     healthCheckPath: /health

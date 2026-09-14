@@ -5,7 +5,7 @@ A modern website for Kalyani Enterprises, a power and energy solutions provider 
 ## Project Structure
 
 ```
-ke-react-python/
+./
 ├── backend/          # FastAPI Python backend
 │   └── seed-data/     # Project-owned JSON content used by the database seeder
 ├── frontend/         # React + Vite frontend
@@ -102,7 +102,7 @@ The build output is placed in `frontend/dist/` and served by the backend or ngin
 Build the React app and copy the project to `/opt/kalyani-enterprises`:
 
 ```bash
-cd /path/to/ke-react-python
+cd /path/to/kalyani-enterprises
 (cd frontend && npm ci && npm run build)
 sudo mkdir -p /opt/kalyani-enterprises
 sudo cp -r . /opt/kalyani-enterprises/

@@ -65,7 +65,7 @@ export default function AdminQueriesPage() {
               ) : (
                 queries.map((query) => (
                   <tr key={query.id}>
-                    <td className="px-4 py-4 text-sm text-gray-700">{new Date(query.createdAt || '').toLocaleString()}</td>
+                    <td className="px-4 py-4 text-sm text-gray-700">{query.created_at ? new Date(query.created_at).toLocaleString() : '—'}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{query.name}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{query.email}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{query.phone}</td>

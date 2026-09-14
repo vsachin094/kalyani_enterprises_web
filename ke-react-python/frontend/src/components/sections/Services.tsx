@@ -1,10 +1,13 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { getServices } from '@/lib/data';
+import { useEffect, useState } from 'react';
+import { getServices as getApiServices } from '@/lib/api';
 import { ProductCard } from '@/components/ui/Card';
+import { Product } from '@/types';
 import { ToolCase, Wrench, Search, Lightbulb } from 'lucide-react';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { EmptyState, LoadingGrid, SectionError } from '@/components/ui/AsyncState';
 
 const serviceIcons = {
   'Solar Installation': ToolCase,
@@ -14,7 +17,11 @@ const serviceIcons = {
 };
 
 export function Services() {
-  const services = getServices();
+  const [services, setServices] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const load = () => { setLoading(true); setError(false); getApiServices().then(setServices).catch(() => setError(true)).finally(() => setLoading(false)); };
+  useEffect(() => { load(); }, []);
   const { t } = useLanguage();
 
   return (
@@ -28,7 +35,7 @@ export function Services() {
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <motion.div
+        {loading ? <LoadingGrid count={4} /> : error ? <SectionError onRetry={load} /> : services.length === 0 ? <EmptyState label="Services will be listed here soon." /> : <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -45,7 +52,7 @@ export function Services() {
           <p className="text-lg text-gray-600">
             {t('servicesDescription')}
           </p>
-        </motion.div>
+        </motion.div>}
 
         {/* Services Grid */}
         <motion.div
@@ -72,7 +79,7 @@ export function Services() {
                 name={service.name}
                 icon={(() => { const Icon = serviceIcons[service.name as keyof typeof serviceIcons] || ToolCase; return <Icon className="w-6 h-6" />; })()}
                 features={service.features}
-                image={service.image ? `/images/${service.image}` : undefined}
+                image={service.image ? (service.image.startsWith('/') ? service.image : `/images/${service.image}`) : undefined}
                 href={`/services/${service.id}`}
                 category="service"
               />

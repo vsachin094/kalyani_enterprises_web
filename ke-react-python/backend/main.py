@@ -1,16 +1,41 @@
 import os
 from pathlib import Path
+from sqlalchemy import inspect, text
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from config import setting
-from database import Base, engine
+from database import Base, engine, SessionLocal
 from routers import products, services, queries, feedback, analytics, admin, catalog
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
+
+
+def ensure_schema_columns():
+    """Add fields introduced after older local databases were created."""
+    inspector = inspect(engine)
+    for table, column, definition in (
+        ("products", "visible", "BOOLEAN NOT NULL DEFAULT TRUE"),
+        ("portfolio_projects", "visible", "BOOLEAN NOT NULL DEFAULT TRUE"),
+        ("page_visits", "visitor_id", "VARCHAR(80)"),
+        ("offer_banners", "expires_at", "TIMESTAMP"),
+    ):
+        columns = {column["name"] for column in inspector.get_columns(table)}
+        if column not in columns:
+            with engine.begin() as connection:
+                connection.execute(text(f"ALTER TABLE {table} ADD COLUMN {column} {definition}"))
+
+
+ensure_schema_columns()
+
+admin_db = SessionLocal()
+try:
+    admin.sync_admin_from_environment(admin_db)
+finally:
+    admin_db.close()
 
 app = FastAPI(
     title="Kalyani Enterprises API",
@@ -56,6 +81,9 @@ FRONTEND_DIST = os.path.join(
     "frontend",
     "dist",
 )
+MEDIA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+if os.path.isdir(MEDIA_DIR):
+    app.mount("/media", StaticFiles(directory=MEDIA_DIR), name="media")
 
 
 @app.get("/")

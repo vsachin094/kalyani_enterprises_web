@@ -2,19 +2,26 @@
 
 import { motion } from 'framer-motion';
 import { useState, useCallback, useEffect } from 'react';
-import { getPortfolioProjects } from '@/lib/data';
+import { getPortfolio } from '@/lib/api';
 import { PortfolioCard } from '@/components/ui/Card';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { PortfolioProject } from '@/types';
+import { EmptyState, LoadingGrid, SectionError } from '@/components/ui/AsyncState';
 
 export function Portfolio() {
-  const projects = getPortfolioProjects();
+  const [projects, setProjects] = useState<PortfolioProject[]>([]);
   const { t } = useLanguage();
   const [activeType, setActiveType] = useState('All');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(1);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const load = () => { setLoading(true); setError(false); getPortfolio().then(setProjects).catch(() => setError(true)).finally(() => setLoading(false)); };
+  useEffect(() => { load(); }, []);
+  const projectTypes = ['All', ...Array.from(new Set(projects.map((project) => project.type)))];
   useEffect(() => {
     const updateItemsPerView = () => {
       setItemsPerView(window.innerWidth >= 1280 ? 3 : window.innerWidth >= 768 ? 2 : 1);
@@ -76,19 +83,20 @@ export function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-12" role="tablist"
+          className="-mx-4 mb-12 flex flex-nowrap justify-start gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:justify-center sm:overflow-visible sm:px-0" role="tablist" aria-label="Filter projects by type"
         >
-          {['All', 'Residential', 'Commercial', 'Industrial', 'Institutional', 'Off-Grid'].map((type) => (
+          {projectTypes.map((type) => (
             <button
               key={type}
               role="tab"
               aria-selected={activeType === type}
+              aria-label={`Show ${type} projects`}
               onClick={() => {
                 setActiveType(type);
                 setCurrentIndex(0);
               }}
               className={cn(
-                'px-5 py-2 rounded-full text-sm font-medium transition-all',
+                'shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2',
                 activeType === type
                   ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/25'
                   : 'bg-white text-gray-600 hover:bg-orange-50 hover:text-orange-600 border border-gray-200'
@@ -100,7 +108,7 @@ export function Portfolio() {
         </motion.div>
 
         {/* Projects Carousel */}
-        <div className="relative" onMouseEnter={() => setAutoPlay(false)} onMouseLeave={() => setAutoPlay(true)}>
+        {loading ? <LoadingGrid count={3} /> : error ? <SectionError onRetry={load} /> : filteredProjects.length === 0 ? <EmptyState label="No projects are available in this category yet." /> : <div className="relative" onMouseEnter={() => setAutoPlay(false)} onMouseLeave={() => setAutoPlay(true)}>
           {/* Left Arrow */}
           <button
             onClick={prevSlide}
@@ -163,7 +171,7 @@ export function Portfolio() {
           >
             <ChevronRight className="w-6 h-6" />
           </button>
-        </div>
+        </div>}
 
       </div>
     </section>

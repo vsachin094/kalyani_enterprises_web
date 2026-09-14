@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from typing import List, Optional
 import uuid
@@ -30,6 +31,27 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
+
+
+def sync_admin_from_environment(db):
+    """Create or update the single admin account from environment variables."""
+    username = os.getenv("ADMIN_USERNAME")
+    password = os.getenv("ADMIN_PASSWORD")
+    if not username or not password:
+        raise RuntimeError("ADMIN_USERNAME and ADMIN_PASSWORD must be set")
+    if len(password) < 8:
+        raise RuntimeError("ADMIN_PASSWORD must be at least 8 characters")
+
+    admin = db.query(AdminUser).filter(AdminUser.username == username).first()
+    if admin is None:
+        admin = db.query(AdminUser).order_by(AdminUser.created_at).first()
+    if admin is None:
+        admin = AdminUser(id=str(uuid.uuid4()))
+        db.add(admin)
+
+    admin.username = username
+    admin.password_hash = get_password_hash(password)
+    db.commit()
 
 
 def create_access_token(data: dict) -> str:
@@ -124,10 +146,12 @@ def get_all_queries(db: Session = Depends(get_db), admin=Depends(get_current_adm
 def get_analytics(db: Session = Depends(get_db), admin=Depends(get_current_admin)):
     """Get visit analytics (admin only)"""
     total_visits = db.query(PageVisit).count()
+    unique_visitors = db.query(func.count(func.distinct(PageVisit.visitor_id))).filter(PageVisit.visitor_id.isnot(None)).scalar() or 0
     recent_visits = db.query(PageVisit).order_by(PageVisit.visited_at.desc()).limit(100).all()
 
     return {
         "total_visits": total_visits,
+        "unique_visitors": unique_visitors,
         "recent_visits": [
             {
                 "id": v.id,

@@ -1,10 +1,15 @@
 # Kalyani Enterprises Content Guide
 
+> Initial catalogue content lives in `backend/seed-data/` and is loaded with
+> `backend/seed_data.py`. New or changing content should normally be managed
+> from the authenticated `/admin/content` page so it is stored in the database.
+> This guide documents the JSON seed format for initial data and recovery.
+
 This guide explains how to add and manage content for the Kalyani Enterprises website.
 
 ## Adding New Products
 
-1. **Create product JSON file**: Add a new file in `data/products/` following the naming convention `*.json`.
+1. **Create product JSON file**: Add a new file in `backend/seed-data/products/` following the naming convention `*.json`.
 
 2. **Product structure**: Each product must have these fields:
    - `id` (string): Unique identifier (use the product slug, e.g., "solar-panels")
@@ -42,7 +47,7 @@ This guide explains how to add and manage content for the Kalyani Enterprises we
 
 ## Adding New Services
 
-1. **Create service JSON file**: Add a new file in `data/services/` following the naming convention `*.json`.
+1. **Create service JSON file**: Add a new file in `backend/seed-data/services/` following the naming convention `*.json`.
 
 2. **Service structure**: Each service must have these fields:
    - `id` (string): Unique identifier (use the service slug, e.g., "solar-installation")
@@ -88,7 +93,7 @@ This guide explains how to add and manage content for the Kalyani Enterprises we
 
 ## Adding New Portfolio Projects
 
-1. **Create portfolio entry**: Add a new entry in `data/portfolio.json`.
+1. **Create portfolio entry**: Add a new entry in `backend/seed-data/portfolio.json`.
 
 2. **Portfolio structure**: Each project must have these fields:
    - `id` (string): Unique identifier
@@ -114,7 +119,7 @@ This guide explains how to add and manage content for the Kalyani Enterprises we
 
 ## Adding Brand Logos
 
-1. **Create brand logo entry**: Add a new entry in `data/brand-logos.json`.
+1. **Create brand logo entry**: Add a new entry in `backend/seed-data/brand-logos.json`.
 
 2. **Brand logo structure**: Each entry must have these fields:
    - `id` (string): Unique identifier
@@ -199,12 +204,11 @@ This guide explains how to add and manage content for the Kalyani Enterprises we
 
 ## Deployment Checklist
 
-After making content changes:
+After changing seed content:
 
-1. Run `npm run build` in the frontend directory
-2. Rebuild the Docker image: `docker build -t kalyani-enterprises .`
-3. Restart the container: `docker restart kalyani-enterprises`
-4. Or deploy to Render.com with the updated code
+1. Run `cd backend && python seed_data.py` against the intended database.
+2. Run `cd frontend && npm run build`.
+3. Restart the systemd service, or rebuild the optional Docker image.
 
 ## Troubleshooting
 

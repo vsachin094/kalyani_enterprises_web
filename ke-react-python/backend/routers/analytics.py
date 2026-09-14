@@ -19,6 +19,7 @@ def record_visit(visit: VisitCreate, request: Request, db: Session = Depends(get
         page_path=page_path,
         user_agent=request.headers.get("user-agent", ""),
         referer=request.headers.get("referer", ""),
+        visitor_id=visit.visitorId[:80] if visit.visitorId else None,
     )
     db.add(item)
     db.commit()

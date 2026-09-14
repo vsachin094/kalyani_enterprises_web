@@ -2,30 +2,27 @@
 
 import { motion } from 'framer-motion';
 import { useState, useCallback, useEffect } from 'react';
-import { getTestimonials } from '@/lib/data';
+import { getTestimonials } from '@/lib/api';
 import { TestimonialCard } from '@/components/ui/Card';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { Testimonial } from '@/types';
+import { EmptyState, LoadingGrid, SectionError } from '@/components/ui/AsyncState';
 
 export function Testimonials() {
   const { t } = useLanguage();
-  const [testimonials, setTestimonials] = useState(getTestimonials());
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [autoPlay, setAutoPlay] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   
   const [itemsPerView, setItemsPerView] = useState(1);
   const maxIndex = Math.max(0, testimonials.length - itemsPerView);
 
   useEffect(() => {
-    fetch('/api/feedback?status=approved')
-      .then((response) => response.ok ? response.json() : [])
-      .then((approved) => {
-        if (Array.isArray(approved) && approved.length) {
-          setTestimonials([...approved, ...getTestimonials()]);
-        }
-      })
-      .catch(() => undefined);
+    getTestimonials().then(setTestimonials).catch(() => setError(true)).finally(() => setLoading(false));
   }, []);
 
   const goToSlide = useCallback((index: number) => {
@@ -96,6 +93,7 @@ export function Testimonials() {
         </motion.div>
 
         {/* Carousel */}
+        {loading ? <LoadingGrid count={3} /> : error ? <SectionError onRetry={() => { setLoading(true); setError(false); getTestimonials().then(setTestimonials).catch(() => setError(true)).finally(() => setLoading(false)); }} /> : testimonials.length === 0 ? <EmptyState label="Customer testimonials will appear here after approval." /> : <>
         <div className="relative">
           {/* Left Arrow */}
           <button
@@ -184,7 +182,7 @@ export function Testimonials() {
               )}
             />
           ))}
-        </motion.div>
+        </motion.div></>}
 
         {/* Average Rating */}
         <motion.div

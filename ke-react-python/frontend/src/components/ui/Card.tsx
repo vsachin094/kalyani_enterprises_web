@@ -91,7 +91,7 @@ export function ImagePlaceholder({ label = "Image coming soon", className = "" }
 export function AssetImage({ src, alt, className = "", placeholderLabel }: { src?: string; alt: string; className?: string; placeholderLabel?: string }) {
   const [failed, setFailed] = React.useState(false);
   if (!src || failed) return <ImagePlaceholder label={placeholderLabel ?? "Image coming soon"} className={className} />;
-  return <img src={src} alt={alt} className={className} loading="lazy" onError={() => setFailed(true)} />;
+  return <img src={src} alt={alt} className={className} loading="lazy" decoding="async" onError={() => setFailed(true)} />;
 }
 
 // Product Card with 3D hover effect
@@ -225,7 +225,7 @@ export function PortfolioCard({ title, type, capacity, location, date, image, de
   return (
     <Card className="overflow-hidden h-full group relative">
       <div className="aspect-video relative overflow-hidden">
-        <AssetImage src={"/images/portfolio/" + image} alt={title} placeholderLabel="Project image coming soon" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+        <AssetImage src={image.startsWith('/') ? image : "/images/portfolio/" + image} alt={title} placeholderLabel="Project image coming soon" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
         <div className="absolute bottom-4 left-4 right-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">

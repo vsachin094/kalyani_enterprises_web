@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, Phone, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -13,6 +13,8 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -39,6 +41,19 @@ export function Header() {
     });
   };
 
+  const goHome = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setMobileMenuOpen(false);
+
+    if (location.pathname === '/' && !location.hash) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    navigate('/');
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  };
+
   const navLinks = [
     { href: '/', label: t('home') },
     { href: '/products', label: t('products') },
@@ -60,7 +75,7 @@ export function Header() {
         <div className="flex h-[4.5rem] items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link to="/" className="group flex items-center gap-2.5" aria-label="Kalyani Enterprises Home">
+            <Link to="/" onClick={goHome} className="group flex items-center gap-2.5" aria-label="Kalyani Enterprises Home">
               <img
                 src="/images/KE_Logo.png"
                 alt="Kalyani Enterprises Logo"
@@ -79,6 +94,7 @@ export function Header() {
               <Link
                 key={link.href}
                 to={link.href}
+                onClick={link.href === '/' ? goHome : undefined}
                 className="relative rounded-full px-2 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-orange-50 hover:text-orange-600"
               >
                 {link.label}
@@ -141,8 +157,8 @@ export function Header() {
                 <Link
                   key={link.href}
                   to={link.href}
+                  onClick={link.href === '/' ? goHome : () => setMobileMenuOpen(false)}
                   className="block px-4 py-3 text-base font-medium text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {link.label}
                 </Link>

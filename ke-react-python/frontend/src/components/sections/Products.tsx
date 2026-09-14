@@ -1,11 +1,14 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { getProducts } from '@/lib/data';
+import { useEffect, useState } from 'react';
+import { getProducts as getApiProducts } from '@/lib/api';
 import { ProductCard } from '@/components/ui/Card';
+import { Product } from '@/types';
 import { Sun, Battery, Zap, Box, House } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/components/providers/LanguageProvider';
+import { EmptyState, LoadingGrid, SectionError } from '@/components/ui/AsyncState';
 
 const productIcons = {
   'Solar Panels': Sun,
@@ -18,7 +21,11 @@ const productIcons = {
 };
 
 export function Products() {
-  const products = getProducts();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const load = () => { setLoading(true); setError(false); getApiProducts().then(setProducts).catch(() => setError(true)).finally(() => setLoading(false)); };
+  useEffect(() => { load(); }, []);
   const { t } = useLanguage();
 
   return (
@@ -32,7 +39,7 @@ export function Products() {
       
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <motion.div
+        {loading ? <LoadingGrid count={4} /> : error ? <SectionError onRetry={load} /> : products.length === 0 ? <EmptyState label="Products will be listed here soon." /> : <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
@@ -49,7 +56,7 @@ export function Products() {
           <p className="text-lg text-gray-600">
             {t('productsDescription')}
           </p>
-        </motion.div>
+        </motion.div>}
 
         {/* Products Grid */}
         <motion.div
@@ -76,7 +83,7 @@ export function Products() {
                 name={product.name}
                 icon={(() => { const Icon = productIcons[product.name as keyof typeof productIcons] || Box; return <Icon className="w-6 h-6" />; })()}
                 features={product.features}
-                image={product.image ? `/images/${product.image}` : undefined}
+                image={product.image ? (product.image.startsWith('/') ? product.image : `/images/${product.image}`) : undefined}
                 href={`/products/${product.id}`}
                 category="product"
               />

@@ -3,15 +3,11 @@ Seed the database with the JSON files bundled with this project.
 Run: python seed_data.py
 """
 import json
-import os
-import sys
 import uuid
 from pathlib import Path
 
 from database import SessionLocal, Base, engine
-from models import Product, Testimonial, PortfolioProject, BrandLogo, AdminUser
-from routers.admin import get_password_hash
-from config import setting
+from models import Product, Testimonial, PortfolioProject, BrandLogo
 
 # Project-owned seed data. This keeps the repository portable and independent.
 SEED_DATA_DIR = Path(__file__).parent / "seed-data"
@@ -219,32 +215,6 @@ def seed_brand_logos(db):
     print(f"  Total added: {count}")
 
 
-def seed_admin_user(db):
-    """Create default admin user if none exists"""
-    print("\n=== Seeding Admin User ===")
-
-    existing = db.query(AdminUser).first()
-    if existing:
-        print(f"  [SKIP] Admin user already exists: {existing.username}")
-        return
-
-    username = setting("admin", "username", "ADMIN_USERNAME", "admin")
-    password = setting("admin", "password", "ADMIN_PASSWORD")
-    if not password:
-        if os.getenv("APP_ENV", "development") == "production":
-            raise RuntimeError("ADMIN_PASSWORD must be set in production")
-        password = "change-this-password"
-
-    admin = AdminUser(
-        id=str(uuid.uuid4()),
-        username=username,
-        password_hash=get_password_hash(password),
-    )
-    db.add(admin)
-    db.commit()
-    print(f"  [OK] Admin user created: {username}")
-
-
 def main():
     """Main seed function"""
     print("=" * 50)
@@ -260,7 +230,6 @@ def main():
         seed_testimonials(db)
         seed_portfolio(db)
         seed_brand_logos(db)
-        seed_admin_user(db)
         print("\n=== Seeding Complete ===")
     finally:
         db.close()

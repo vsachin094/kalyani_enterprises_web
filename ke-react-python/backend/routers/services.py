@@ -11,14 +11,14 @@ router = APIRouter(prefix="/api", tags=["services"])
 @router.get("/services", response_model=List[ProductResponse])
 def get_services(db: Session = Depends(get_db)):
     """Get all services sorted by order"""
-    services = db.query(Product).filter(Product.type == "Service").order_by(Product.order).all()
+    services = db.query(Product).filter(Product.type == "Service", Product.visible.is_(True)).order_by(Product.order).all()
     return services
 
 
 @router.get("/services/{service_id}", response_model=ProductResponse)
 def get_service(service_id: str, db: Session = Depends(get_db)):
     """Get a single service by ID"""
-    service = db.query(Product).filter(Product.id == service_id, Product.type == "Service").first()
+    service = db.query(Product).filter(Product.id == service_id, Product.type == "Service", Product.visible.is_(True)).first()
     if not service:
         raise HTTPException(status_code=404, detail="Service not found")
     return service

@@ -23,6 +23,21 @@ body {
   overflow-x: hidden;
 }
 
+/* Keep keyboard navigation visible across native controls and custom cards. */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 3px solid rgb(249 115 22 / 0.75);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 .section-transition::before {
   content: "";
   position: absolute;

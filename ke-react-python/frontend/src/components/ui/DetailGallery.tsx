@@ -28,6 +28,8 @@ export function DetailGallery({ images, title }: { images: string[]; title: stri
             src={resolveImagePath(activeImage)}
             alt={`${title} image ${activeIndex + 1}`}
             className="absolute inset-0 h-full w-full object-contain p-6 sm:p-10"
+            loading={activeIndex === 0 ? "eager" : "lazy"}
+            decoding="async"
             onError={() => setFailedImages((current) => ({ ...current, [activeIndex]: true }))}
           />
         ) : (
@@ -57,7 +59,7 @@ export function DetailGallery({ images, title }: { images: string[]; title: stri
         <div className="grid grid-cols-4 gap-3 sm:grid-cols-5">
           {safeImages.map((image, index) => (
             <button type="button" key={`${image}-${index}`} onClick={() => setActiveIndex(index)} aria-label={`Select image ${index + 1}`} className={`relative aspect-square overflow-hidden rounded-xl border-2 bg-white transition ${index === activeIndex ? "border-orange-500 shadow-md" : "border-gray-200 hover:border-orange-300"}`}>
-              {image && !failedImages[index] ? <img src={resolveImagePath(image)} alt="" className="absolute inset-0 h-full w-full object-contain p-2" onError={() => setFailedImages((current) => ({ ...current, [index]: true }))} /> : <ImageIcon className="absolute inset-0 m-auto h-6 w-6 text-gray-300" />}
+              {image && !failedImages[index] ? <img src={resolveImagePath(image)} alt={`${title} thumbnail ${index + 1}`} className="absolute inset-0 h-full w-full object-contain p-2" loading="lazy" decoding="async" onError={() => setFailedImages((current) => ({ ...current, [index]: true }))} /> : <ImageIcon className="absolute inset-0 m-auto h-6 w-6 text-gray-300" />}
             </button>
           ))}
         </div>

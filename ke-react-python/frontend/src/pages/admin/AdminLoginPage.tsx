@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { adminLogin } from '@/lib/api';
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +20,8 @@ export default function AdminLoginPage() {
     try {
       const result = await adminLogin(username, password);
       localStorage.setItem('ke-admin-token', result.access_token);
-      navigate('/admin');
+      const destination = (location.state as { from?: string } | null)?.from || '/admin';
+      navigate(destination, { replace: true });
     } catch (err) {
       setError('Invalid admin username or password.');
     } finally {

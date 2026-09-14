@@ -7,6 +7,7 @@ import { VisitRecord } from '@/types';
 export default function AdminAnalyticsPage() {
   const [visits, setVisits] = useState<VisitRecord[]>([]);
   const [totalVisits, setTotalVisits] = useState(0);
+  const [uniqueVisitors, setUniqueVisitors] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -21,6 +22,7 @@ export default function AdminAnalyticsPage() {
       .then((data) => {
         setVisits(data.recent_visits);
         setTotalVisits(data.total_visits);
+        setUniqueVisitors(data.unique_visitors);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
@@ -42,16 +44,19 @@ export default function AdminAnalyticsPage() {
         <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">Visit analytics</p>
-            <h1 className="mt-2 text-4xl font-bold text-gray-950">Recorded page visits</h1>
-            <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-600">
-              Total visits: <strong>{totalVisits}</strong>. Showing the most recent 100 visit events captured from the internal database.
-            </p>
+            <h1 className="mt-2 text-4xl font-bold text-gray-950">Visitor analytics</h1>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-600">Counts are anonymous. A browser receives a random local ID so multiple page views from the same browser count as one unique visitor.</p>
           </div>
         </div>
 
         {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>}
 
-        <div className="mt-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"><p className="text-sm font-semibold text-gray-500">Unique visitors</p><p className="mt-2 text-4xl font-bold text-gray-950">{uniqueVisitors}</p></div>
+          <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm"><p className="text-sm font-semibold text-gray-500">Total page views</p><p className="mt-2 text-4xl font-bold text-gray-950">{totalVisits}</p></div>
+        </div>
+
+        <div className="mt-8 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
           <table className="min-w-full divide-y divide-gray-200 text-left text-sm">
             <thead className="bg-gray-50">
               <tr>

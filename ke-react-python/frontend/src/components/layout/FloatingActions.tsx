@@ -13,8 +13,9 @@ export function FloatingActions() {
   return (
     <>
       <div className="fixed bottom-4 left-3 z-40 sm:bottom-6 sm:left-5">
-        <Link to="/#contact" title="Quick enquiry" aria-label="Send a quick enquiry" className="group inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-orange-500 bg-white text-orange-500 shadow-lg shadow-orange-900/20 transition hover:-translate-y-0.5 hover:bg-orange-500 hover:text-white sm:h-14 sm:w-14">
+        <Link to="/#contact" title="Quick enquiry" aria-label="Send a quick enquiry" className="group inline-flex h-12 items-center justify-center gap-2 rounded-full border-2 border-orange-500 bg-white px-4 text-orange-500 shadow-lg shadow-orange-900/20 transition hover:-translate-y-0.5 hover:bg-orange-500 hover:text-white sm:h-14 sm:w-14 sm:px-0">
           <Zap className="h-6 w-6 sm:h-7 sm:w-7" />
+          <span className="text-sm font-bold sm:hidden">Get a quote</span>
           <span className="pointer-events-none absolute left-full ml-3 hidden whitespace-nowrap rounded-lg bg-gray-950 px-3 py-2 text-xs font-semibold text-white opacity-0 shadow-lg transition group-hover:opacity-100 sm:block">Quick enquiry</span>
         </Link>
       </div>

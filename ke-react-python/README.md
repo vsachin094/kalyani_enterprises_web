@@ -10,9 +10,8 @@ ke-react-python/
 │   └── seed-data/     # Project-owned JSON content used by the database seeder
 ├── frontend/         # React + Vite frontend
 ├── deploy/           # Deployment configs (Dockerfile, nginx, systemd)
-├── data/             # JSON data files (products, services, testimonials, etc.)
+├── backend/data/     # Runtime SQLite database and uploaded media (ignored)
 ├── Dockerfile        # Multi-stage Docker build
-├── render.yaml       # Render.com deployment config
 └── README.md         # This file
 ```
 
@@ -20,26 +19,29 @@ ke-react-python/
 
 The Python backend is built with FastAPI and provides:
 
-- **Product API**: `/api/products/` - CRUD operations for product catalogue
-- **Service API**: `/api/services/` - CRUD operations for service descriptions
+- **Product API**: `/api/products` - Public product catalogue
+- **Service API**: `/api/services` - Public service catalogue
 - **Feedback API**: `/api/feedback/` - Submit and review customer feedback
 - **Query API**: `/api/queries/` - Customer enquiry submissions
 - **Analytics API**: `/api/analytics/` - Page visit tracking
-- **Admin API**: `/admin/` - Authentication and management endpoints
+- **Admin API**: `/api/admin/` - Authentication and management endpoints
 
 ### API Endpoints
 
 | Endpoint | Description |
 |----------|-------------|
-| `/api/products/` | Product catalogue management |
-| `/api/services/` | Service descriptions and processes |
-| `/api/feedback/` | Customer feedback submission and review |
-| `/api/queries/` | Customer enquiry submissions |
-| `/api/analytics/` | Page visit tracking |
-| `/admin/login/` | Admin authentication |
-| `/admin/feedback/` | Feedback review dashboard |
-| `/admin/queries/` | Enquiry review dashboard |
-| `/admin/analytics/` | Visit analytics dashboard |
+| `/api/products` | Public product catalogue |
+| `/api/services` | Public service catalogue |
+| `/api/feedback` | Customer feedback submission and approved feedback |
+| `/api/queries` | Customer enquiry submissions |
+| `/api/analytics/visit` | Anonymous page-visit tracking |
+| `/api/admin/login` | Admin authentication |
+| `/api/admin/feedback` | Feedback review dashboard data |
+| `/api/admin/queries` | Enquiry review data |
+| `/api/admin/analytics` | Visitor analytics data |
+| `/api/admin/products` | Add and manage products/services |
+| `/api/admin/portfolio` | Add and manage projects |
+| `/api/admin/offers` | Publish/delete expiring offer banners |
 
 ### Running the Backend
 
@@ -51,8 +53,11 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 
 Production requires `DATABASE_URL`, `SECRET_KEY`, `ADMIN_USERNAME`,
 `ADMIN_PASSWORD`, `APP_ENV=production`, `CORS_ORIGINS`, and `ALLOWED_HOSTS`.
-Run `python seed_data.py` once after configuring the database. Do not use the
-development admin password or JWT secret in production.
+Run `python seed_data.py` once after configuring the database. This command
+only seeds catalogue/content data. On backend startup, admin credentials are
+read from `ADMIN_USERNAME` and `ADMIN_PASSWORD` and the admin account is
+created or updated automatically. They are not stored in `config.json` or seed
+data.
 
 For PostgreSQL, the host, port, database name, and username can be kept in
 `backend/config.json`; set only `DATABASE_PASSWORD` in `.env`. You can also
@@ -123,22 +128,6 @@ Install nginx, copy `deploy/nginx.conf` to
 `sudo certbot --nginx` for HTTPS.
 
 Docker remains available as an optional alternative through `Dockerfile`.
-
-### Render.com
-
-1. Connect your GitHub repository
-2. Set the build command from `render.yaml`
-3. Add environment variables (DATABASE_URL, SECRET_KEY) as secrets
-4. Deploy
-
-### Systemd (VPS)
-
-```bash
-cp deploy/kalyani-enterprises.service /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable kalyani-enterprises
-systemctl start kalyani-enterprises
-```
 
 ## Data Structure
 

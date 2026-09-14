@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from 'framer-motion';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { ArrowDown } from 'lucide-react';
-import { HeroScene } from '@/components/3d/HeroScene';
+const HeroScene = lazy(() => import('@/components/3d/HeroScene').then((module) => ({ default: module.HeroScene })));
 import { Button } from '@/components/ui/Button';
-import { getBrandLogos } from '@/lib/data';
+import { getBrandLogos as getApiBrandLogos } from '@/lib/api';
 import { useLanguage } from '@/components/providers/LanguageProvider';
 
 export function Hero() {
@@ -17,7 +18,7 @@ export function Hero() {
     >
       {/* 3D Canvas Background */}
       <div className="absolute inset-0 z-0" aria-hidden="true">
-        <HeroScene />
+        <Suspense fallback={<div className="h-full w-full bg-gradient-to-br from-gray-950 via-gray-900 to-orange-950" />}><HeroScene /></Suspense>
       </div>
 
       {/* Gradient Overlay */}
@@ -51,7 +52,7 @@ export function Hero() {
             className="mb-6"
           >
             <div className="flex justify-center" aria-label="Kalyani Enterprises">
-              <img src="/images/KE_Logo.png" alt="Kalyani Enterprises logo" className="h-20 w-20 object-contain drop-shadow-2xl sm:h-24 sm:w-24" />
+              <img src="/images/KE_Logo.png" alt="Kalyani Enterprises logo" width="96" height="96" fetchPriority="high" decoding="async" className="h-20 w-20 object-contain drop-shadow-2xl sm:h-24 sm:w-24" />
             </div>
           </motion.div>
 
@@ -120,8 +121,10 @@ export function Hero() {
 
 // Brand Marquee Component
 function BrandMarquee() {
-  const brandLogos = getBrandLogos();
+  const [brandLogos, setBrandLogos] = useState<Awaited<ReturnType<typeof getApiBrandLogos>>>([]);
+  useEffect(() => { getApiBrandLogos().then(setBrandLogos).catch(() => undefined); }, []);
   const brands = [...brandLogos, ...brandLogos];
+  if (!brandLogos.length) return null;
 
   return (
     <div className="overflow-hidden" aria-label="Brands we work with through direct and channel partnerships">

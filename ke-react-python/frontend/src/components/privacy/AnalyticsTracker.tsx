@@ -11,7 +11,14 @@ export function AnalyticsTracker() {
   useEffect(() => {
     if (!pathname || lastTracked.current === pathname) return;
     lastTracked.current = pathname;
-    void fetch("/api/analytics/visit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pagePath: pathname }), keepalive: true }).catch(() => undefined);
+    let visitorId = localStorage.getItem("ke-anonymous-visitor-id");
+    if (!visitorId) {
+      visitorId = typeof crypto.randomUUID === "function"
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      localStorage.setItem("ke-anonymous-visitor-id", visitorId);
+    }
+    void fetch("/api/analytics/visit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pagePath: pathname, visitorId }), keepalive: true }).catch(() => undefined);
   }, [pathname]);
 
   return null;

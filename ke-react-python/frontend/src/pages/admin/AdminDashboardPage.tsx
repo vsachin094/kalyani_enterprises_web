@@ -1,17 +1,20 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, CheckCircle2, FolderKanban, Image as ImageIcon, Package, Wrench } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, BarChart3, CheckCircle2, FolderKanban } from 'lucide-react';
 
 const areas = [
-  { title: "Visitor analytics", description: "View visitor counts and recent page visits stored in the internal database.", href: "/admin/analytics", icon: FolderKanban, action: "View visitor analytics" },
-  { title: "Feedback review", description: "Review, edit, approve, or reject customer feedback before it appears publicly.", href: "/admin/feedback", icon: CheckCircle2, action: "Open feedback review" },
-  { title: "Submitted queries", description: "Review customer enquiries and contact requests sent through the website.", href: "/admin/queries", icon: ImageIcon, action: "View enquiries" },
-  { title: "Products", description: "Add or update products through the product JSON files and related images.", href: "/products", icon: Package, action: "View product catalogue" },
-  { title: "Services", description: "Maintain service descriptions, processes, galleries, and related service links.", href: "/services", icon: Wrench, action: "View services" },
-  { title: "Projects", description: "Add recent project entries and project images to the portfolio data.", href: "/#portfolio", icon: FolderKanban, action: "View project portfolio" },
-  { title: "Images and logos", description: "Store product, service, project, and partner images in the documented public folders.", href: "/admin", icon: ImageIcon, action: "See project guide" },
+  { title: "Content controls", description: "Add projects, upload project images, show or hide products and services, and manage offer banners.", href: "/admin/content", icon: FolderKanban, action: "Manage content" },
+  { title: "Feedback approval", description: "Review customer feedback and approve only the entries you want to show publicly.", href: "/admin/feedback", icon: CheckCircle2, action: "Review feedback" },
+  { title: "Unique visitors", description: "See anonymous unique visitors, total page views, and recent visits.", href: "/admin/analytics", icon: BarChart3, action: "View visitors" },
 ];
 
 export default function AdminDashboardPage() {
+  const navigate = useNavigate();
+
+  function signOut() {
+    localStorage.removeItem('ke-admin-token');
+    navigate('/admin/login', { replace: true });
+  }
+
   return (
     <section className="min-h-[calc(100vh-8rem)] bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
@@ -19,9 +22,11 @@ export default function AdminDashboardPage() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">Kalyani Enterprises</p>
             <h1 className="mt-2 text-4xl font-bold tracking-tight text-gray-950 sm:text-5xl">Admin dashboard</h1>
-            <p className="mt-4 max-w-2xl text-gray-600">Manage customer feedback here and use the content guide to safely extend the catalogue, services, project portfolio, and media.</p>
+            <p className="mt-4 max-w-2xl text-gray-600">Use the three simple tools below to manage what customers see and understand website activity.</p>
           </div>
-          <span className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm"><BookOpen className="h-4 w-4 text-orange-600" /> CONTENT_GUIDE.md in project root</span>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" onClick={signOut} className="rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-orange-300 hover:text-orange-600">Sign out</button>
+          </div>
         </div>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -31,7 +36,7 @@ export default function AdminDashboardPage() {
           })}
         </div>
 
-        <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900"><strong>Current content model:</strong> feedback has an in-site approval workflow. Products, services, projects, brand logos, and images are file-managed so changes remain version-controlled and can be reviewed before publishing.</div>
+        <div className="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900"><strong>Simple workflow:</strong> approve feedback, add projects, toggle visibility, or check anonymous visitor numbers. Changes take effect through the website API.</div>
       </div>
     </section>
   );

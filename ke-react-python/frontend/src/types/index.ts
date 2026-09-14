@@ -22,6 +22,7 @@ export interface Product {
   duration?: string;
   warranty?: string;
   service_areas?: string[];
+  visible?: boolean;
 }
 
 export interface Testimonial {
@@ -34,8 +35,8 @@ export interface Testimonial {
   project_type: string;
   date: string;
   status?: 'pending' | 'approved' | 'rejected';
-  createdAt?: string;
-  updatedAt?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface PortfolioProject {
@@ -56,6 +57,17 @@ export interface PortfolioProject {
     grid_type: string;
     subsidy?: string;
   };
+  visible?: boolean;
+}
+
+export interface OfferBanner {
+  id: string;
+  title: string;
+  image: string;
+  link?: string;
+  active: boolean;
+  expires_at?: string;
+  created_at?: string;
 }
 
 export interface BrandLogo {
@@ -73,7 +85,7 @@ export interface QuerySubmission {
   phone: string;
   project_type: string;
   message: string;
-  createdAt: string;
+  created_at: string;
 }
 
 export interface FeedbackSubmission {
@@ -85,8 +97,8 @@ export interface FeedbackSubmission {
   project_type: string;
   date: string;
   status: 'pending' | 'approved' | 'rejected';
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface VisitRecord {

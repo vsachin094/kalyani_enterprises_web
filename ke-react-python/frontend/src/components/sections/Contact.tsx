@@ -13,15 +13,17 @@ export function Contact() {
   const { t } = useLanguage();
   const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [enquiryReference, setEnquiryReference] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormState('submitting');
     try {
-      await submitQuery(formData);
+      const projectType = String(new FormData(e.currentTarget).get('project_type') || 'General enquiry');
+      const result = await submitQuery({ ...formData, project_type: projectType });
+      setEnquiryReference(result.id);
       setFormState('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
-      setTimeout(() => setFormState('idle'), 5000);
     } catch {
       setFormState('error');
     }
@@ -81,7 +83,8 @@ export function Contact() {
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
                   <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4"><CheckCircle className="w-10 h-10 text-green-400" /></div>
                   <h3 className="text-2xl font-bold text-white mb-2">Message Sent Successfully!</h3>
-                  <p className="text-gray-400 mb-6">Thank you for reaching out. Our team will review your requirement and contact you soon.</p>
+                  <p className="text-gray-400 mb-3">Thank you for reaching out. Our team will review your requirement and contact you soon.</p>
+                  <p className="mb-6 rounded-xl border border-green-500/20 bg-green-500/10 px-4 py-3 text-sm text-green-300">Your enquiry reference: <strong>{enquiryReference}</strong></p>
                   <Button variant="outline" onClick={() => setFormState('idle')} className="w-full sm:w-auto">Send Another Message</Button>
                 </motion.div>
               ) : (
@@ -102,7 +105,7 @@ export function Contact() {
                     </div>
                     <div>
                       <label htmlFor="projectType" className="block text-sm font-medium text-gray-300 mb-2">Interested In</label>
-                      <select id="projectType" disabled={formState === 'submitting'} className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all">
+                      <select id="projectType" name="project_type" disabled={formState === 'submitting'} className="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all">
                         <option value="">Select Project Type</option>
                         <option value="residential">Home Power Solution</option>
                         <option value="commercial">Commercial / Industrial Power</option>

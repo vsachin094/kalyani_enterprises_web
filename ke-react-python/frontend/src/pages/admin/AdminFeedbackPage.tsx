@@ -77,7 +77,7 @@ export default function AdminFeedbackPage() {
               ) : (
                 feedback.map((item) => (
                   <tr key={item.id}>
-                    <td className="px-4 py-4 text-sm text-gray-700">{new Date(item.createdAt || '').toLocaleString()}</td>
+                    <td className="px-4 py-4 text-sm text-gray-700">{item.created_at ? new Date(item.created_at).toLocaleString() : '—'}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{item.name}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{item.location}</td>
                     <td className="px-4 py-4 text-sm text-gray-700">{'★'.repeat(item.rating)}</td>

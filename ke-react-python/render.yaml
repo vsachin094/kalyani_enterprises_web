@@ -1,0 +1,34 @@
+# Render Blueprint for the self-contained Kalyani Enterprises deployment.
+# In the current monorepo, select this file as the Blueprint Path:
+# ke-react-python/render.yaml
+
+services:
+  - type: web
+    name: kalyanienterprises
+    runtime: docker
+    plan: free
+    region: singapore
+    rootDir: ke-react-python
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    domains:
+      - kalyanienterprises.com
+    initialDeployHook: python backend/seed_data.py
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_FALLBACK_TO_SQLITE
+        value: "false"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
